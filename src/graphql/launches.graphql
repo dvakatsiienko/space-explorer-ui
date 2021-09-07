@@ -1,0 +1,23 @@
+query Launches($after: Int) {
+    launches(after: $after) {
+        cursor
+        hasMore
+        launches {
+            ...LaunchTile
+        }
+    }
+}
+
+fragment LaunchTile on Launch {
+    __typename
+    id
+    isBooked
+    rocket {
+        id
+        name
+    }
+    mission {
+        name
+        missionPatch
+    }
+}

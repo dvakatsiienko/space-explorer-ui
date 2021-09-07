@@ -1,9 +1,9 @@
-export { default as Button } from './button';
-export { default as Footer } from './footer';
-export { default as Header } from './header';
-export { default as LaunchDetail } from './launch-detail';
-export { default as LaunchTile } from './launch-tile';
-export { default as Loading } from './loading';
-export { default as LoginForm } from './login-form';
-export { default as MenuItem } from './menu-item';
-export { default as PageContainer } from './page-container';
+export { Button } from './Button';
+export { Header } from './Header';
+export { Footer } from './Footer';
+export { Loading } from './Loading';
+export { LaunchDetail } from './LaunchDetail';
+export { LaunchTile } from './LaunchTile';
+export { LoginForm } from './LoginForm';
+export { MenuItem } from './MenuItem';
+export { PageContainer } from './PageContainer';

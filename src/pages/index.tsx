@@ -1,24 +1,38 @@
-import React, { Fragment } from 'react';
+/* Core */
+import { Fragment } from 'react';
 import { Router } from '@reach/router';
 
-import Launch from './launch';
-import Launches from './launches';
-import Cart from './cart';
-import Profile from './profile';
+/* Pages */
+import { Login } from './Login';
+import { Launch } from './Launch';
+import { Launches } from './Launches';
+import { Cart } from './Cart';
+import { Profile } from './Profile';
+
+/* Components */
 import { Footer, PageContainer } from '../components';
 
-export default function Pages() {
-  return (
-    <Fragment>
-      <PageContainer>
-        <Router primary={false} component={Fragment}>
-          <Launches path="/" />
-          <Launch path="launch/:launchId" />
-          <Cart path="cart" />
-          <Profile path="profile" />
-        </Router>
-      </PageContainer>
-      <Footer />
-    </Fragment>
-  );
-}
+/* Instruments */
+import * as gql from '../graphql';
+
+export const Pages: React.FC = () => {
+    const { data } = gql.useIsUserLoggedInQuery();
+
+    if (!data?.isLoggedIn) {
+        return <Login />;
+    }
+
+    return (
+        <>
+            <PageContainer>
+                <Router primary={false} component={Fragment}>
+                    <Launches path="/" />
+                    <Launch path="launch/:launchId" />
+                    <Cart path="cart" />
+                    <Profile path="profile" />
+                </Router>
+            </PageContainer>
+            <Footer />
+        </>
+    );
+};
