@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { useApolloClient } from '@apollo/client';
 
 /* Instruments */
-import { isLoggedInVar } from '../lib/cache';
-import { menuItemClassName } from '../components/MenuItem';
-import { ReactComponent as ExitIcon } from '../assets/icons/exit.svg';
+import { isLoggedInVar } from '../../lib/cache';
+import { menuItemClassName } from '../../components/MenuItem';
+import { ReactComponent as ExitIcon } from '../../assets/icons/exit.svg';
 
 export const LogoutButton: React.FC = () => {
     const client = useApolloClient();

@@ -7,3 +7,6 @@ export { LaunchTile } from './LaunchTile';
 export { LoginForm } from './LoginForm';
 export { MenuItem } from './MenuItem';
 export { PageContainer } from './PageContainer';
+export { CartItem } from './CartItem';
+export { BookTrips } from './BookTrips';
+export { ActionButton } from './ActionButton';

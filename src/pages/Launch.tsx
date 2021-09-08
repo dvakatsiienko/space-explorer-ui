@@ -2,8 +2,7 @@
 import { useParams } from 'react-router-dom';
 
 /* Components */
-import { Header, LaunchDetail, Loading } from '../components';
-import { ActionButton } from '../containers';
+import { Header, LaunchDetail, Loading, ActionButton } from '../components';
 
 /* Instruments */
 import * as gql from '../graphql';

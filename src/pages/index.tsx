@@ -27,6 +27,9 @@ export const Pages: React.FC = () => {
     const location = useLocation();
 
     useEffect(() => {
+        location.pathname !== '/login' &&
+            navigate('/launches', { replace: true });
+
         if (!data?.isLoggedIn && location.pathname !== '/login') {
             navigate('/login', { replace: true });
         } else if (data?.isLoggedIn && location.pathname === '/login') {

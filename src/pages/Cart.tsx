@@ -1,6 +1,5 @@
 /* Components */
-import { Header, Loading } from '../components';
-import { CartItem, BookTrips } from '../containers';
+import { Header, Loading, CartItem, BookTrips } from '../components';
 
 /* Instruments */
 import * as gql from '../graphql';
@@ -14,7 +13,8 @@ export const Cart: React.FC = () => {
     return (
         <>
             <Header>My Cart</Header>
-            {data?.cartItems.length === 0 ? (
+
+            {data?.cartItems?.length === 0 ? (
                 <p data-testid="empty-message">No items in your cart</p>
             ) : (
                 <>
