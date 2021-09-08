@@ -3,7 +3,7 @@ import styled from 'react-emotion';
 import { useApolloClient } from '@apollo/client';
 
 /* Instruments */
-import { isLoggedInVar } from '../cache';
+import { isLoggedInVar } from '../lib/cache';
 import { menuItemClassName } from '../components/MenuItem';
 import { ReactComponent as ExitIcon } from '../assets/icons/exit.svg';
 

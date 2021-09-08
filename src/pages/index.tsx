@@ -1,6 +1,12 @@
 /* Core */
-import { Fragment } from 'react';
-import { Router } from '@reach/router';
+import { useEffect } from 'react';
+import {
+    Routes,
+    Route,
+    Outlet,
+    useNavigate,
+    useLocation,
+} from 'react-router-dom';
 
 /* Pages */
 import { Login } from './Login';
@@ -17,22 +23,34 @@ import * as gql from '../graphql';
 
 export const Pages: React.FC = () => {
     const { data } = gql.useIsUserLoggedInQuery();
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    if (!data?.isLoggedIn) {
-        return <Login />;
-    }
+    useEffect(() => {
+        if (!data?.isLoggedIn && location.pathname !== '/login') {
+            navigate('/login', {
+                replace: true,
+            });
+        }
+    }, [data?.isLoggedIn, location.pathname, navigate]);
 
     return (
         <>
             <PageContainer>
-                <Router primary={false} component={Fragment}>
-                    <Launches path="/" />
-                    <Launch path="launch/:launchId" />
-                    <Cart path="cart" />
-                    <Profile path="profile" />
-                </Router>
+                <Routes>
+                    <Route path="/" element={<Outlet />}>
+                        <Route path="launches" element={<Launches />}>
+                            <Route path=":launchId" element={<Launch />} />
+                        </Route>
+                        <Route path="cart" element={<Cart />} />
+                        <Route path="profile" element={<Profile />} />
+
+                        <Route path="login" element={<Login />} />
+                    </Route>
+                </Routes>
             </PageContainer>
-            <Footer />
+
+            {data?.isLoggedIn && <Footer />}
         </>
     );
 };

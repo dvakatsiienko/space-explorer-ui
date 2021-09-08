@@ -3,7 +3,7 @@ import { Button } from '../components';
 
 /* Instruments */
 import * as gql from '../graphql';
-import { cartItemsVar } from '../cache';
+import { cartItemsVar } from '../lib/cache';
 
 export const BookTrips: React.FC<BookTripsProps> = props => {
     const [bookTrips, { data }] = gql.useBookTripsMutation({

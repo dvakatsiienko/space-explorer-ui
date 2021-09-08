@@ -1,20 +1,20 @@
+/* Core */
 import styled from 'react-emotion';
 
+/* Instruments */
 import { unit, colors } from '../styles';
 
-export function PageContainer(props: any) {
+export const PageContainer: React.FC = props => {
     return (
         <>
             <Bar />
+
             <Container>{props.children}</Container>
         </>
     );
-}
+};
 
-/**
- * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
- */
-
+/* Styles */
 const Bar = styled('div')({
     flexShrink: 0,
     height: 12,

@@ -1,5 +1,5 @@
 /* Core */
-import { RouteComponentProps } from '@reach/router';
+import { useParams } from 'react-router-dom';
 
 /* Components */
 import { Header, LaunchDetail, Loading } from '../components';
@@ -8,9 +8,10 @@ import { ActionButton } from '../containers';
 /* Instruments */
 import * as gql from '../graphql';
 
-export const Launch: React.FC<LaunchProps> = props => {
+export const Launch: React.FC = () => {
+    const params = useParams();
     const { data, loading, error } = gql.useLaunchQuery({
-        variables: { launchId: props.launchId ?? '' },
+        variables: { launchId: params.launchId },
     });
 
     if (loading) return <Loading />;
@@ -28,7 +29,3 @@ export const Launch: React.FC<LaunchProps> = props => {
         </>
     );
 };
-
-interface LaunchProps extends RouteComponentProps {
-    launchId?: string;
-}

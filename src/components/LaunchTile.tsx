@@ -1,6 +1,6 @@
 /* Core */
 import styled, { css } from 'react-emotion';
-import { Link } from '@reach/router';
+import { Link } from 'react-router-dom';
 
 /* Instruments */
 import galaxy from '../assets/images/galaxy.jpg';
@@ -18,7 +18,7 @@ export function getBackgroundImage(id: string) {
 export const LaunchTile: React.FC<LaunchTileProps> = props => {
     return (
         <StyledLink
-            to={`/launch/${props.launch?.id}`}
+            to={`/launches/${props.launch?.id}`}
             style={{
                 backgroundImage: getBackgroundImage(props.launch?.id ?? ''),
             }}>

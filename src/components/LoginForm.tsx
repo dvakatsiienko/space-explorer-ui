@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+/* Core */
+import { useState } from 'react';
 import styled, { css } from 'react-emotion';
 import { size } from 'polished';
 
+/* Components */
 import { Button } from './Button';
 import space from '../assets/images/space.jpg';
 import { ReactComponent as Logo } from '../assets/logo.svg';
@@ -9,56 +11,45 @@ import { ReactComponent as Curve } from '../assets/curve.svg';
 import { ReactComponent as Rocket } from '../assets/rocket.svg';
 import { colors, unit } from '../styles';
 
-interface LoginFormProps {
-    login: (a: { variables: any }) => void;
-}
+export const LoginForm: React.FC<LoginFormProps> = props => {
+    const [email, setEmail] = useState('');
 
-interface LoginFormState {
-    email: string;
-}
-
-export class LoginForm extends Component<LoginFormProps, LoginFormState> {
-    state = { email: '' };
-
-    onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const email = (event.target as HTMLInputElement).value;
-        this.setState(s => ({ email }));
+
+        setEmail(email);
     };
 
-    onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        this.props.login({ variables: { email: this.state.email } });
+
+        props.login({ variables: { email } });
     };
 
-    render() {
-        return (
-            <Container>
-                <Header>
-                    <StyledCurve />
-                    <StyledLogo />
-                </Header>
-                <StyledRocket />
-                <Heading>Space Explorer</Heading>
-                <StyledForm onSubmit={e => this.onSubmit(e)}>
-                    <StyledInput
-                        required
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        data-testid="login-input"
-                        onChange={e => this.onChange(e)}
-                    />
-                    <Button type="submit">Log in</Button>
-                </StyledForm>
-            </Container>
-        );
-    }
-}
+    return (
+        <Container>
+            <Header>
+                <StyledCurve />
+                <StyledLogo />
+            </Header>
+            <StyledRocket />
+            <Heading>Space Explorer</Heading>
+            <StyledForm onSubmit={onSubmit}>
+                <StyledInput
+                    required
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    data-testid="login-input"
+                    onChange={onChange}
+                />
+                <Button type="submit">Log in</Button>
+            </StyledForm>
+        </Container>
+    );
+};
 
-/**
- * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
- */
-
+/* Styles */
 const Container = styled('div')({
     display: 'flex',
     flexDirection: 'column',
@@ -126,3 +117,8 @@ const StyledInput = styled('input')({
         borderColor: colors.primary,
     },
 });
+
+/* Types */
+interface LoginFormProps {
+    login: (a: { variables: any }) => void;
+}

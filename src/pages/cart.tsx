@@ -1,6 +1,3 @@
-/* Core */
-import { RouteComponentProps } from '@reach/router';
-
 /* Components */
 import { Header, Loading } from '../components';
 import { CartItem, BookTrips } from '../containers';
@@ -8,7 +5,7 @@ import { CartItem, BookTrips } from '../containers';
 /* Instruments */
 import * as gql from '../graphql';
 
-export const Cart: React.FC<CartProps> = () => {
+export const Cart: React.FC = () => {
     const { data, loading, error } = gql.useGetCartItemsQuery();
 
     if (loading) return <Loading />;
@@ -30,6 +27,3 @@ export const Cart: React.FC<CartProps> = () => {
         </>
     );
 };
-
-/* Types */
-interface CartProps extends RouteComponentProps {}

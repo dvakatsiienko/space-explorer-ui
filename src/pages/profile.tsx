@@ -1,13 +1,10 @@
-/* Core */
-import { RouteComponentProps } from '@reach/router';
-
 /* Components */
 import { Loading, Header, LaunchTile } from '../components';
 
 /* Instruments */
 import * as gql from '../graphql';
 
-export const Profile: React.FC<ProfileProps> = () => {
+export const Profile: React.FC = () => {
     const { data, loading, error } = gql.useUserProfileQuery({
         fetchPolicy: 'network-only',
     });
@@ -28,5 +25,3 @@ export const Profile: React.FC<ProfileProps> = () => {
         </>
     );
 };
-
-interface ProfileProps extends RouteComponentProps {}

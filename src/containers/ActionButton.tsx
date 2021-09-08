@@ -6,7 +6,7 @@ import { Button } from '../components';
 
 /* Instruments */
 import * as gql from '../graphql';
-import { cartItemsVar } from '../cache';
+import { cartItemsVar } from '../lib/cache';
 
 const CancelTripButton: React.FC<ButtonProps> = ({ id }) => {
     const [mutate, { loading, error }] = gql.useCancelTripMutation({

@@ -1,12 +1,16 @@
+/* Core */
+import { useNavigate } from 'react-router-dom';
+
 /* Components */
 import { LoginForm, Loading } from '../components';
 
 /* Instruments */
 import * as gql from '../graphql';
-import { isLoggedInVar } from '../cache';
+import { isLoggedInVar } from '../lib/cache';
 
 export const Login = () => {
-    const [login, { loading, error }] = gql.useLoginMutation({
+    const navigate = useNavigate();
+    const [login, { data, loading, error }] = gql.useLoginMutation({
         onCompleted(response) {
             const { login } = response;
 
@@ -14,6 +18,7 @@ export const Login = () => {
                 localStorage.setItem('token', login.token);
                 localStorage.setItem('userId', login.id);
                 isLoggedInVar(true);
+                navigate('/launches');
             }
         },
     });

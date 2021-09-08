@@ -1,5 +1,8 @@
+/* Core */
 import styled, { css } from 'react-emotion';
-import { Link } from '@reach/router';
+import { Link } from 'react-router-dom';
+
+/* Instruments */
 import { colors, unit } from '../styles';
 
 export const menuItemClassName = css({

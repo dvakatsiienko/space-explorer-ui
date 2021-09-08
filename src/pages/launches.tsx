@@ -1,6 +1,5 @@
 /* Core */
 import { useState } from 'react';
-import { RouteComponentProps } from '@reach/router';
 
 /* Components */
 import { Header, LaunchTile, Loading, Button } from '../components';
@@ -8,7 +7,7 @@ import { Header, LaunchTile, Loading, Button } from '../components';
 /* Instruments */
 import * as gql from '../graphql';
 
-export const Launches: React.FC<LaunchesProps> = () => {
+export const Launches: React.FC = () => {
     const { data, loading, error, fetchMore } = gql.useLaunchesQuery();
     const [isLoadingMore, setIsLoadingMore] = useState(false);
 
@@ -43,6 +42,3 @@ export const Launches: React.FC<LaunchesProps> = () => {
         </>
     );
 };
-
-/* Types */
-interface LaunchesProps extends RouteComponentProps {}
