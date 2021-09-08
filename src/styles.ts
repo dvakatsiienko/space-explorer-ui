@@ -1,3 +1,4 @@
+/* Core */
 import { injectGlobal } from 'react-emotion';
 
 export const unit = 8;
