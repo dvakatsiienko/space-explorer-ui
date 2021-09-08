@@ -10,15 +10,15 @@ import { isLoggedInVar } from '../lib/cache';
 
 export const Login = () => {
     const navigate = useNavigate();
-    const [login, { data, loading, error }] = gql.useLoginMutation({
+    const [login, { loading, error }] = gql.useLoginMutation({
         onCompleted(response) {
             const { login } = response;
 
             if (login) {
-                localStorage.setItem('token', login.token);
-                localStorage.setItem('userId', login.id);
                 isLoggedInVar(true);
                 navigate('/launches');
+                localStorage.setItem('token', login.token);
+                localStorage.setItem('userId', login.id);
             }
         },
     });

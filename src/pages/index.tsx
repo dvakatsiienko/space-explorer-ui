@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import {
     Routes,
     Route,
-    Outlet,
+    Navigate,
     useNavigate,
     useLocation,
 } from 'react-router-dom';
@@ -28,27 +28,26 @@ export const Pages: React.FC = () => {
 
     useEffect(() => {
         if (!data?.isLoggedIn && location.pathname !== '/login') {
-            navigate('/login', {
-                replace: true,
-            });
+            navigate('/login', { replace: true });
+        } else if (data?.isLoggedIn && location.pathname === '/login') {
+            navigate('/launches', { replace: true });
         }
-    }, [data?.isLoggedIn, location.pathname, navigate]);
+    }, []);
 
     return (
         <>
-            <PageContainer>
-                <Routes>
-                    <Route path="/" element={<Outlet />}>
-                        <Route path="launches" element={<Launches />}>
-                            <Route path=":launchId" element={<Launch />} />
-                        </Route>
-                        <Route path="cart" element={<Cart />} />
-                        <Route path="profile" element={<Profile />} />
+            <Routes>
+                <Route path="/" element={<PageContainer />}>
+                    <Route path="launches" element={<Launches />} />
+                    <Route path="launches/:launchId" element={<Launch />} />
+                    <Route path="cart" element={<Cart />} />
+                    <Route path="profile" element={<Profile />} />
+                </Route>
 
-                        <Route path="login" element={<Login />} />
-                    </Route>
-                </Routes>
-            </PageContainer>
+                <Route path="login" element={<Login />} />
+
+                <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
 
             {data?.isLoggedIn && <Footer />}
         </>

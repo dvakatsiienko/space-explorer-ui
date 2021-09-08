@@ -32,6 +32,7 @@ export const LoginForm: React.FC<LoginFormProps> = props => {
                 <StyledCurve />
                 <StyledLogo />
             </Header>
+
             <StyledRocket />
             <Heading>Space Explorer</Heading>
             <StyledForm onSubmit={onSubmit}>

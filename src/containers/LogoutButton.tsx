@@ -1,5 +1,6 @@
 /* Core */
 import styled from 'react-emotion';
+import { useNavigate } from 'react-router-dom';
 import { useApolloClient } from '@apollo/client';
 
 /* Instruments */
@@ -9,6 +10,7 @@ import { ReactComponent as ExitIcon } from '../assets/icons/exit.svg';
 
 export const LogoutButton: React.FC = () => {
     const client = useApolloClient();
+    const navigate = useNavigate();
 
     const logout = () => {
         client.cache.evict({ fieldName: 'userProfile' });
@@ -18,6 +20,7 @@ export const LogoutButton: React.FC = () => {
         localStorage.removeItem('userId');
 
         isLoggedInVar(false);
+        navigate('/login');
     };
 
     return (

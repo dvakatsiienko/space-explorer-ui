@@ -1,5 +1,6 @@
 /* Core */
 import styled from 'react-emotion';
+import { Outlet } from 'react-router-dom';
 
 /* Instruments */
 import { unit, colors } from '../styles';
@@ -9,7 +10,9 @@ export const PageContainer: React.FC = props => {
         <>
             <Bar />
 
-            <Container>{props.children}</Container>
+            <Container>
+                <Outlet />
+            </Container>
         </>
     );
 };

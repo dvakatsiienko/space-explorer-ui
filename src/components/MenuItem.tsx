@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { colors, unit } from '../styles';
 
 export const menuItemClassName = css({
+    cursor: 'pointer',
     flexGrow: 1,
     width: 0,
     fontFamily: 'inherit',
