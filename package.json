@@ -28,8 +28,8 @@
         "@graphql-codegen/typescript-apollo-client-helpers": "2.1.4",
         "@graphql-codegen/typescript-operations": "2.1.4",
         "@graphql-codegen/typescript-react-apollo": "3.1.4",
-        "@types/node": "16.9.4",
-        "@types/react": "17.0.22",
+        "@types/node": "16.9.6",
+        "@types/react": "17.0.24",
         "@types/react-dom": "17.0.9"
     },
     "eslintConfig": {
