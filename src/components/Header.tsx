@@ -1,7 +1,9 @@
-import styled from 'react-emotion';
+/* Core */
+import styled from 'styled-components';
 import { size } from 'polished';
 
-import { unit, colors } from '../styles';
+/* Instruments */
+import { SPACING, COLORS } from '../styles';
 import dog1 from '../assets/images/dog-1.png';
 import dog2 from '../assets/images/dog-2.png';
 import dog3 from '../assets/images/dog-3.png';
@@ -45,15 +47,15 @@ export const Header: React.FC<HeaderProps> = ({
 const Container = styled('div')({
     display: 'flex',
     alignItems: 'center',
-    marginBottom: unit * 4.5,
+    marginBottom: SPACING * 4.5,
 });
 
 const Image = styled('img')(size(134), (props: { round: boolean }) => ({
-    marginRight: unit * 2.5,
+    marginRight: SPACING * 2.5,
     borderRadius: props.round ? '50%' : '0%',
 }));
 
 const Subheading = styled('h5')({
-    marginTop: unit / 2,
-    color: colors.textSecondary,
+    marginTop: SPACING / 2,
+    color: COLORS.textSecondary,
 });

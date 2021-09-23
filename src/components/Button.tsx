@@ -1,7 +1,9 @@
-import styled from 'react-emotion';
+/* Core */
+import styled from 'styled-components';
 import { lighten } from 'polished';
 
-import { unit, colors } from '../styles';
+/* Instruments */
+import { SPACING, COLORS } from '../styles';
 
 const height = 50;
 
@@ -10,7 +12,7 @@ export const Button = styled('button')({
     minWidth: 200,
     height,
     margin: '0 auto',
-    padding: `0 ${unit * 4}px`,
+    padding: `0 ${SPACING * 4}px`,
     border: 'none',
     borderRadius: height / 2,
     fontFamily: 'inherit',
@@ -19,13 +21,13 @@ export const Button = styled('button')({
     fontWeight: 700,
     color: 'white',
     textTransform: 'uppercase',
-    backgroundColor: colors.accent,
+    backgroundColor: COLORS.accent,
     cursor: 'pointer',
     outline: 'none',
     ':hover': {
-        backgroundColor: lighten(0.1, colors.accent),
+        backgroundColor: lighten(0.1, COLORS.accent),
     },
     ':active': {
-        backgroundColor: lighten(0.2, colors.accent),
+        backgroundColor: lighten(0.2, COLORS.accent),
     },
 });

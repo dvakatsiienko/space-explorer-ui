@@ -1,7 +1,7 @@
 /* Core */
-import styled from 'react-emotion';
-import { useNavigate } from 'react-router-dom';
 import { useApolloClient } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 /* Instruments */
 import { isLoggedInVar } from '../../lib/cache';
@@ -24,7 +24,7 @@ export const LogoutButton: React.FC = () => {
     };
 
     return (
-        <StyledButton data-testid="logout-button" onClick={logout}>
+        <StyledButton onClick={logout}>
             <ExitIcon />
             Logout
         </StyledButton>
@@ -32,8 +32,11 @@ export const LogoutButton: React.FC = () => {
 };
 
 /* Styles */
-const StyledButton = styled('button')(menuItemClassName, {
-    background: 'none',
-    border: 'none',
-    padding: 0,
-});
+const StyledButton = styled('button')(
+    {
+        background: 'none',
+        border: 'none',
+        padding: 0,
+    },
+    menuItemClassName,
+);

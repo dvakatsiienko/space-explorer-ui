@@ -15,7 +15,7 @@ export const Cart: React.FC = () => {
             <Header>My Cart</Header>
 
             {data?.cartItems?.length === 0 ? (
-                <p data-testid="empty-message">No items in your cart</p>
+                <p>No items in your cart</p>
             ) : (
                 <>
                     {data?.cartItems.map((launchId: any) => (

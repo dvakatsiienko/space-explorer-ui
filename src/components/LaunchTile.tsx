@@ -1,12 +1,12 @@
 /* Core */
-import styled, { css } from 'react-emotion';
 import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 
 /* Instruments */
 import galaxy from '../assets/images/galaxy.jpg';
 import iss from '../assets/images/iss.jpg';
 import moon from '../assets/images/moon.jpg';
-import { unit } from '../styles';
+import { SPACING } from '../styles';
 import * as gql from '../graphql';
 
 const backgrounds = [galaxy, iss, moon];
@@ -30,23 +30,26 @@ export const LaunchTile: React.FC<LaunchTileProps> = props => {
 
 /* Styles */
 export const cardClassName = css({
-    padding: `${unit * 4}px ${unit * 5}px`,
+    padding: `${SPACING * 4}px ${SPACING * 5}px`,
     borderRadius: 7,
     color: 'white',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
 });
 
-const padding = unit * 2;
-const StyledLink = styled(Link)(cardClassName, {
-    display: 'block',
-    height: 193,
-    marginTop: padding,
-    textDecoration: 'none',
-    ':not(:last-child)': {
-        marginBottom: padding * 2,
+const padding = SPACING * 2;
+const StyledLink = styled(Link)(
+    {
+        display: 'block',
+        height: 193,
+        marginTop: padding,
+        textDecoration: 'none',
+        ':not(:last-child)': {
+            marginBottom: padding * 2,
+        },
     },
-});
+    cardClassName,
+);
 
 /* Types */
 interface LaunchTileProps {

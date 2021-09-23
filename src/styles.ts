@@ -1,8 +1,8 @@
 /* Core */
-import { injectGlobal } from 'react-emotion';
+import { createGlobalStyle } from 'styled-components';
 
-export const unit = 8;
-export const colors = {
+export const SPACING = 8;
+export const COLORS = {
     primary: '#220a82',
     secondary: '#14cbc4',
     accent: '#e535ab',
@@ -12,46 +12,50 @@ export const colors = {
     textSecondary: '#747790',
 };
 
-export const injectStyles = () => {
-    return injectGlobal({
-        // @ts-ignore
-        [['html', 'body']]: {
-            height: '100%',
-        },
-        body: {
-            margin: 0,
-            padding: 0,
-            fontFamily: "'Source Sans Pro', sans-serif",
-            backgroundColor: colors.background,
-            color: colors.text,
-        },
-        '#root': {
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: '100%',
-        },
-        '*': {
-            boxSizing: 'border-box',
-        },
-        // @ts-ignore
-        [['h1', 'h2', 'h3', 'h4', 'h5', 'h6']]: {
-            margin: 0,
-            fontWeight: 600,
-        },
-        h1: {
-            fontSize: 48,
-            lineHeight: 1,
-        },
-        h2: {
-            fontSize: 40,
-        },
-        h3: {
-            fontSize: 36,
-        },
-        h5: {
-            fontSize: 16,
-            textTransform: 'uppercase',
-            letterSpacing: 4,
-        },
-    });
-};
+export const GlobalStyle = createGlobalStyle`
+    * {
+        box-sizing: border-box;
+    }
+
+    #root {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+    }
+
+    html, body {
+        height: 100%;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Source Sans Pro, system-ui, sans-serif;
+        background-color: ${COLORS.background};
+        color: ${COLORS.text};
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        margin: 0;
+        font-weight: 600;
+    }
+
+    h1 {
+        font-size: 48px;
+        line-height: 1;
+    }
+
+    h2 {
+        font-size: 40px;
+    }
+
+    h3 {
+        font-size: 36px;
+    }
+
+    h5 {
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+    }
+`;

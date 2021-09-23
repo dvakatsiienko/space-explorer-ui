@@ -1,9 +1,9 @@
 /* Core */
-import styled, { css } from 'react-emotion';
 import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 
 /* Instruments */
-import { colors, unit } from '../styles';
+import { COLORS, SPACING } from '../styles';
 
 export const menuItemClassName = css({
     cursor: 'pointer',
@@ -18,11 +18,14 @@ export const menuItemClassName = css({
     svg: {
         display: 'block',
         width: 60,
-        margin: `0 auto ${unit}px`,
-        fill: colors.secondary,
+        margin: `0 auto ${SPACING}px`,
+        fill: COLORS.secondary,
     },
 });
 
-export const MenuItem = styled(Link)(menuItemClassName, {
-    textDecoration: 'none',
-});
+export const MenuItem = styled(Link)(
+    {
+        textDecoration: 'none',
+    },
+    menuItemClassName,
+);

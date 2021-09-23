@@ -1,11 +1,11 @@
 /* Core */
-import styled from 'react-emotion';
+import styled from 'styled-components';
 
 /* Components */
 import { cardClassName, getBackgroundImage } from './LaunchTile';
 
 /* Instruments */
-import { unit } from '../styles';
+import { SPACING } from '../styles';
 
 export const LaunchDetail: React.FC<any> = props => {
     const { id, site, rocket } = props;
@@ -24,7 +24,10 @@ export const LaunchDetail: React.FC<any> = props => {
 };
 
 /* Styles */
-const Card = styled('div')(cardClassName, {
-    height: 365,
-    marginBottom: unit * 4,
-});
+const Card = styled('div')(
+    {
+        height: 365,
+        marginBottom: SPACING * 4,
+    },
+    cardClassName,
+);

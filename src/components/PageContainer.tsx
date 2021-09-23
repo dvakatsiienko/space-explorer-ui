@@ -1,9 +1,9 @@
 /* Core */
-import styled from 'react-emotion';
 import { Outlet } from 'react-router-dom';
+import styled from 'styled-components';
 
 /* Instruments */
-import { unit, colors } from '../styles';
+import { SPACING, COLORS } from '../styles';
 
 export const PageContainer: React.FC = props => {
     return (
@@ -21,7 +21,7 @@ export const PageContainer: React.FC = props => {
 const Bar = styled('div')({
     flexShrink: 0,
     height: 12,
-    backgroundColor: colors.primary,
+    backgroundColor: COLORS.primary,
 });
 
 const Container = styled('div')({
@@ -31,6 +31,6 @@ const Container = styled('div')({
     width: '100%',
     maxWidth: 600,
     margin: '0 auto',
-    padding: unit * 3,
-    paddingBottom: unit * 5,
+    padding: SPACING * 3,
+    paddingBottom: SPACING * 5,
 });

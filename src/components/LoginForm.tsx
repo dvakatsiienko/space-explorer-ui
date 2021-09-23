@@ -1,6 +1,6 @@
 /* Core */
 import { useState } from 'react';
-import styled, { css } from 'react-emotion';
+import styled, { css } from 'styled-components';
 import { size } from 'polished';
 
 /* Components */
@@ -9,7 +9,7 @@ import space from '../assets/images/space.jpg';
 import { ReactComponent as Logo } from '../assets/logo.svg';
 import { ReactComponent as Curve } from '../assets/curve.svg';
 import { ReactComponent as Rocket } from '../assets/rocket.svg';
-import { colors, unit } from '../styles';
+import { COLORS, SPACING } from '../styles';
 
 export const LoginForm: React.FC<LoginFormProps> = props => {
     const [email, setEmail] = useState('');
@@ -56,9 +56,9 @@ const Container = styled('div')({
     flexDirection: 'column',
     alignItems: 'center',
     flexGrow: 1,
-    paddingBottom: unit * 6,
+    paddingBottom: SPACING * 6,
     color: 'white',
-    backgroundColor: colors.primary,
+    backgroundColor: COLORS.primary,
     backgroundImage: `url(${space})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -69,12 +69,15 @@ const svgClassName = css({
     fill: 'currentColor',
 });
 
-const Header = styled('header')(svgClassName, {
-    width: '100%',
-    marginBottom: unit * 5,
-    padding: unit * 2.5,
-    position: 'relative',
-});
+const Header = styled('header')(
+    {
+        width: '100%',
+        marginBottom: SPACING * 5,
+        padding: SPACING * 2.5,
+        position: 'relative',
+    },
+    svgClassName,
+);
 
 const StyledLogo = styled(Logo)(size(56), {
     display: 'block',
@@ -83,39 +86,42 @@ const StyledLogo = styled(Logo)(size(56), {
 });
 
 const StyledCurve = styled(Curve)(size('100%'), {
-    fill: colors.primary,
+    fill: COLORS.primary,
     position: 'absolute',
     top: 0,
     left: 0,
 });
 
 const Heading = styled('h1')({
-    margin: `${unit * 3}px 0 ${unit * 6}px`,
+    margin: `${SPACING * 3}px 0 ${SPACING * 6}px`,
 });
 
-const StyledRocket = styled(Rocket)(svgClassName, {
-    width: 250,
-});
+const StyledRocket = styled(Rocket)(
+    {
+        width: 250,
+    },
+    svgClassName,
+);
 
 const StyledForm = styled('form')({
     width: '100%',
     maxWidth: 406,
-    padding: unit * 3.5,
+    padding: SPACING * 3.5,
     borderRadius: 3,
     boxShadow: '6px 6px 1px rgba(0, 0, 0, 0.25)',
-    color: colors.text,
+    color: COLORS.text,
     backgroundColor: 'white',
 });
 
 const StyledInput = styled('input')({
     width: '100%',
-    marginBottom: unit * 2,
-    padding: `${unit * 1.25}px ${unit * 2.5}px`,
-    border: `1px solid ${colors.grey}`,
+    marginBottom: SPACING * 2,
+    padding: `${SPACING * 1.25}px ${SPACING * 2.5}px`,
+    border: `1px solid ${COLORS.grey}`,
     fontSize: 16,
     outline: 'none',
     ':focus': {
-        borderColor: colors.primary,
+        borderColor: COLORS.primary,
     },
 });
 

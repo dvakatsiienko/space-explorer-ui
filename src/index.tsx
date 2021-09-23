@@ -7,15 +7,17 @@ import { Pages } from './pages';
 
 /* Instruments */
 import { ApolloProvider } from './lib/ApolloProvider';
-import { injectStyles } from './styles';
-
-injectStyles();
+import { GlobalStyle } from './styles';
 
 render(
-    <Router>
-        <ApolloProvider>
-            <Pages />
-        </ApolloProvider>
-    </Router>,
+    <>
+        <Router>
+            <ApolloProvider>
+                <Pages />
+            </ApolloProvider>
+        </Router>
+
+        <GlobalStyle />
+    </>,
     document.getElementById('root'),
 );
