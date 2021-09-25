@@ -21,6 +21,7 @@ export const Cart: React.FC = () => {
                     {data?.cartItems.map((launchId: any) => (
                         <CartItem key={launchId} launchId={launchId} />
                     ))}
+
                     <BookTrips cartItems={data?.cartItems ?? []} />
                 </>
             )}

@@ -14,7 +14,7 @@ export const LaunchDetail: React.FC<LaunchDetailProps> = props => {
     return (
         <Card
             style={{
-                backgroundImage: getBackgroundImage(),
+                backgroundImage: getBackgroundImage(props.launch.flightNumber),
             }}>
             <h3>
                 {rocket.name} ({rocket.type})

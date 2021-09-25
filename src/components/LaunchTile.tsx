@@ -14,7 +14,7 @@ export const LaunchTile: React.FC<LaunchTileProps> = props => {
         <StyledLink
             to={`/launches/${props.launch.id}`}
             style={{
-                backgroundImage: getBackgroundImage(props.index),
+                backgroundImage: getBackgroundImage(props.launch.flightNumber),
             }}>
             <h3>{props.launch.mission.name}</h3>
             <h5>{props.launch.rocket.name}</h5>
@@ -48,9 +48,8 @@ const StyledLink = styled(Link)(
 /* Helpers */
 const backgrounds = [galaxy, iss, moon];
 
-export function getBackgroundImage(index?: number) {
-    const idx = index ? index : Math.floor(Math.random() * 3);
-    const bg = idx % backgrounds.length;
+export function getBackgroundImage(flightNumber: number) {
+    const bg = flightNumber % backgrounds.length;
 
     return `url(${backgrounds[bg]})`;
 }
@@ -58,5 +57,4 @@ export function getBackgroundImage(index?: number) {
 /* Types */
 interface LaunchTileProps {
     launch: gql.LaunchFragment;
-    index?: number;
 }

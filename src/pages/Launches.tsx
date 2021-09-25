@@ -12,11 +12,11 @@ export const Launches: React.FC = () => {
     const [isLoadingMore, setIsLoadingMore] = useState(false);
 
     if (loading) return <Loading />;
-    if (error) return <p>ERROR</p>;
+    if (error) return <pre>{JSON.stringify(error, null, 4)}</pre>;
     if (!data) return <p>Not found</p>;
 
-    const launchesListJSX = data.launches?.launches?.map((launch, index) => {
-        return <LaunchTile key={launch.id} launch={launch} index={index} />;
+    const launchesListJSX = data?.launches.list.map(launch => {
+        return <LaunchTile key={launch.id} launch={launch} />;
     });
 
     const fetchMoreLaunches = async () => {

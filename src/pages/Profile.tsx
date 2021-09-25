@@ -11,7 +11,7 @@ export const Profile: React.FC = () => {
 
     if (loading) return <Loading />;
     if (error) return <p>ERROR: {error.message}</p>;
-    if (data === undefined) return <p>ERROR</p>;
+    if (!data) return <p>No data</p>;
 
     const tripsListJSX = data?.userProfile?.trips.map(launch => {
         return <LaunchTile key={launch?.id} launch={launch} />;

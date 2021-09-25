@@ -17,6 +17,7 @@ export type Scalars = {
 
 export type Launch = {
   __typename?: 'Launch';
+  flightNumber: Scalars['Int'];
   id: Scalars['ID'];
   isBooked: Scalars['Boolean'];
   mission: Mission;
@@ -24,11 +25,11 @@ export type Launch = {
   site: Scalars['String'];
 };
 
-export type LaunchConnection = {
-  __typename?: 'LaunchConnection';
+export type Launches = {
+  __typename?: 'Launches';
   cursor: Scalars['Int'];
   hasMore: Scalars['Boolean'];
-  launches: Array<Launch>;
+  list: Array<Launch>;
 };
 
 export type Mission = {
@@ -74,7 +75,7 @@ export type Query = {
   cartItems: Array<Scalars['ID']>;
   isLoggedIn: Scalars['Boolean'];
   launch: Launch;
-  launches: LaunchConnection;
+  launches: Launches;
   userProfile?: Maybe<UserProfile>;
 };
 
@@ -116,16 +117,16 @@ export type LaunchesQueryVariables = Exact<{
 }>;
 
 
-export type LaunchesQuery = { __typename?: 'Query', launches: { __typename?: 'LaunchConnection', cursor: number, hasMore: boolean, launches: Array<{ __typename: 'Launch', id: string, isBooked: boolean, site: string, rocket: { __typename?: 'Rocket', id: string, name: string, type: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } }> } };
+export type LaunchesQuery = { __typename?: 'Query', launches: { __typename?: 'Launches', cursor: number, hasMore: boolean, list: Array<{ __typename?: 'Launch', id: string, isBooked: boolean, flightNumber: number, site: string, rocket: { __typename?: 'Rocket', id: string, name: string, type: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } }> } };
 
 export type LaunchQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type LaunchQuery = { __typename?: 'Query', launch: { __typename: 'Launch', id: string, isBooked: boolean, site: string, rocket: { __typename?: 'Rocket', id: string, name: string, type: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } } };
+export type LaunchQuery = { __typename?: 'Query', launch: { __typename?: 'Launch', id: string, isBooked: boolean, flightNumber: number, site: string, rocket: { __typename?: 'Rocket', id: string, name: string, type: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } } };
 
-export type LaunchFragment = { __typename: 'Launch', id: string, isBooked: boolean, site: string, rocket: { __typename?: 'Rocket', id: string, name: string, type: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } };
+export type LaunchFragment = { __typename?: 'Launch', id: string, isBooked: boolean, flightNumber: number, site: string, rocket: { __typename?: 'Rocket', id: string, name: string, type: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } };
 
 export type BookTripsMutationVariables = Exact<{
   launchIds: Array<Maybe<Scalars['ID']>> | Maybe<Scalars['ID']>;
@@ -154,7 +155,7 @@ export type GetCartItemsQuery = { __typename?: 'Query', cartItems: Array<string>
 export type UserProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserProfileQuery = { __typename?: 'Query', userProfile?: Maybe<{ __typename?: 'UserProfile', id: string, email: string, token?: Maybe<string>, trips: Array<{ __typename: 'Launch', id: string, isBooked: boolean, site: string, rocket: { __typename?: 'Rocket', id: string, name: string, type: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } }> }> };
+export type UserProfileQuery = { __typename?: 'Query', userProfile?: Maybe<{ __typename?: 'UserProfile', id: string, email: string, token?: Maybe<string>, trips: Array<{ __typename?: 'Launch', id: string, isBooked: boolean, flightNumber: number, site: string, rocket: { __typename?: 'Rocket', id: string, name: string, type: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } }> }> };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -165,9 +166,9 @@ export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'Us
 
 export const LaunchFragmentDoc = gql`
     fragment LaunchFragment on Launch {
-  __typename
   id
   isBooked
+  flightNumber
   site
   rocket {
     id
@@ -185,7 +186,7 @@ export const LaunchesDocument = gql`
   launches(after: $after) {
     cursor
     hasMore
-    launches {
+    list {
       ...LaunchFragment
     }
   }
@@ -467,19 +468,20 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
-export type LaunchKeySpecifier = ('id' | 'isBooked' | 'mission' | 'rocket' | 'site' | LaunchKeySpecifier)[];
+export type LaunchKeySpecifier = ('flightNumber' | 'id' | 'isBooked' | 'mission' | 'rocket' | 'site' | LaunchKeySpecifier)[];
 export type LaunchFieldPolicy = {
+	flightNumber?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	isBooked?: FieldPolicy<any> | FieldReadFunction<any>,
 	mission?: FieldPolicy<any> | FieldReadFunction<any>,
 	rocket?: FieldPolicy<any> | FieldReadFunction<any>,
 	site?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type LaunchConnectionKeySpecifier = ('cursor' | 'hasMore' | 'launches' | LaunchConnectionKeySpecifier)[];
-export type LaunchConnectionFieldPolicy = {
+export type LaunchesKeySpecifier = ('cursor' | 'hasMore' | 'list' | LaunchesKeySpecifier)[];
+export type LaunchesFieldPolicy = {
 	cursor?: FieldPolicy<any> | FieldReadFunction<any>,
 	hasMore?: FieldPolicy<any> | FieldReadFunction<any>,
-	launches?: FieldPolicy<any> | FieldReadFunction<any>
+	list?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type MissionKeySpecifier = ('missionPatch' | 'name' | MissionKeySpecifier)[];
 export type MissionFieldPolicy = {
@@ -524,9 +526,9 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | LaunchKeySpecifier | (() => undefined | LaunchKeySpecifier),
 		fields?: LaunchFieldPolicy,
 	},
-	LaunchConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | LaunchConnectionKeySpecifier | (() => undefined | LaunchConnectionKeySpecifier),
-		fields?: LaunchConnectionFieldPolicy,
+	Launches?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | LaunchesKeySpecifier | (() => undefined | LaunchesKeySpecifier),
+		fields?: LaunchesFieldPolicy,
 	},
 	Mission?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | MissionKeySpecifier | (() => undefined | MissionKeySpecifier),

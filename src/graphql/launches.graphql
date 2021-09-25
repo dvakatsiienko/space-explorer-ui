@@ -3,7 +3,7 @@ query Launches($after: Int) {
     launches(after: $after) {
         cursor
         hasMore
-        launches {
+        list {
             ...LaunchFragment
         }
     }
@@ -17,9 +17,9 @@ query Launch($id: ID!) {
 
 # Fragment
 fragment LaunchFragment on Launch {
-    __typename
     id
     isBooked
+    flightNumber
     site
     rocket {
         id
