@@ -1,9 +1,0 @@
-query Launch($launchId: ID!) {
-    launch(id: $launchId) {
-        site
-        rocket {
-            type
-        }
-        ...LaunchTile
-    }
-}

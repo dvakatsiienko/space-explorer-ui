@@ -1,20 +1,30 @@
+# Query
 query Launches($after: Int) {
     launches(after: $after) {
         cursor
         hasMore
         launches {
-            ...LaunchTile
+            ...LaunchFragment
         }
     }
 }
 
-fragment LaunchTile on Launch {
+query Launch($id: ID!) {
+    launch(id: $id) {
+        ...LaunchFragment
+    }
+}
+
+# Fragment
+fragment LaunchFragment on Launch {
     __typename
     id
     isBooked
+    site
     rocket {
         id
         name
+        type
     }
     mission {
         name

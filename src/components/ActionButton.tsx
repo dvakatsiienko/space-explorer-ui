@@ -8,7 +8,9 @@ import { Button } from '../components';
 import * as gql from '../graphql';
 import { cartItemsVar } from '../lib/cache';
 
-const CancelTripButton: React.FC<ButtonProps> = ({ id }) => {
+const CancelTripButton: React.FC<ButtonProps> = props => {
+    const { id } = props;
+
     const [mutate, { loading, error }] = gql.useCancelTripMutation({
         variables: { launchId: id },
         update(cache, response) {
@@ -39,38 +41,38 @@ const CancelTripButton: React.FC<ButtonProps> = ({ id }) => {
 
     return (
         <div>
-            <Button onClick={() => mutate()} data-testid={'action-button'}>
-                Cancel This Trip
-            </Button>
+            <Button onClick={() => mutate()}>Cancel This Trip</Button>
         </div>
     );
 };
 
-const ToggleTripButton: React.FC<ButtonProps> = ({ id }) => {
+const ToggleTripButton: React.FC<ButtonProps> = props => {
+    const { id } = props;
+
     const cartItems = useReactiveVar(cartItemsVar);
     const isInCart = id ? cartItems.includes(id) : false;
 
+    const action = () => {
+        if (id) {
+            cartItemsVar(
+                isInCart
+                    ? cartItems.filter(itemId => itemId !== id)
+                    : [...cartItems, id],
+            );
+        }
+    };
+
     return (
         <div>
-            <Button
-                onClick={() => {
-                    if (id) {
-                        cartItemsVar(
-                            isInCart
-                                ? cartItems.filter(itemId => itemId !== id)
-                                : [...cartItems, id],
-                        );
-                    }
-                }}
-                data-testid={'action-button'}>
+            <Button onClick={action}>
                 {isInCart ? 'Remove from Cart' : 'Add to Cart'}
             </Button>
         </div>
     );
 };
 
-export const ActionButton: React.FC<ButtonProps> = props => {
-    const { isBooked, id } = props;
+export const ActionButton: React.FC<ActionButtonProps> = props => {
+    const { isBooked, id } = props.launch;
 
     return isBooked ? (
         <CancelTripButton id={id} />
@@ -82,5 +84,8 @@ export const ActionButton: React.FC<ButtonProps> = props => {
 /* Types */
 interface ButtonProps {
     id: string;
-    isBooked?: boolean;
+}
+
+interface ActionButtonProps {
+    launch: gql.LaunchFragment;
 }

@@ -15,8 +15,8 @@ export const Launches: React.FC = () => {
     if (error) return <p>ERROR</p>;
     if (!data) return <p>Not found</p>;
 
-    const launchesListJSX = data.launches?.launches?.map((launch: any) => {
-        return <LaunchTile key={launch.id} launch={launch} />;
+    const launchesListJSX = data.launches?.launches?.map((launch, index) => {
+        return <LaunchTile key={launch.id} launch={launch} index={index} />;
     });
 
     const fetchMoreLaunches = async () => {

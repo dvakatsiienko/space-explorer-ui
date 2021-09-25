@@ -13,7 +13,7 @@ query UserProfile {
         email
         token
         trips {
-            ...LaunchTile
+            ...LaunchFragment
         }
     }
 }

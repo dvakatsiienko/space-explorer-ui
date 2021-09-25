@@ -3,6 +3,9 @@ schema:
     - src/graphql/schema/client-schema.graphql
 documents: 'src/graphql/**/*.graphql'
 
+config:
+    dedupeOperationSuffix: true
+
 generates:
     src/graphql/index.tsx:
         plugins:

@@ -5,15 +5,16 @@ import styled from 'styled-components';
 import { cardClassName, getBackgroundImage } from './LaunchTile';
 
 /* Instruments */
+import * as gql from '../graphql';
 import { SPACING } from '../styles';
 
-export const LaunchDetail: React.FC<any> = props => {
-    const { id, site, rocket } = props;
+export const LaunchDetail: React.FC<LaunchDetailProps> = props => {
+    const { site, rocket } = props.launch;
 
     return (
         <Card
             style={{
-                backgroundImage: getBackgroundImage(id as string),
+                backgroundImage: getBackgroundImage(),
             }}>
             <h3>
                 {rocket.name} ({rocket.type})
@@ -31,3 +32,8 @@ const Card = styled('div')(
     },
     cardClassName,
 );
+
+/* Types */
+interface LaunchDetailProps {
+    launch: gql.LaunchFragment;
+}

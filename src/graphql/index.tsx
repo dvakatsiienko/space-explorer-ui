@@ -111,21 +111,21 @@ export type UserProfile = {
   trips: Array<Launch>;
 };
 
-export type LaunchQueryVariables = Exact<{
-  launchId: Scalars['ID'];
-}>;
-
-
-export type LaunchQuery = { __typename?: 'Query', launch: { __typename: 'Launch', site: string, id: string, isBooked: boolean, rocket: { __typename?: 'Rocket', type: string, id: string, name: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } } };
-
 export type LaunchesQueryVariables = Exact<{
   after?: Maybe<Scalars['Int']>;
 }>;
 
 
-export type LaunchesQuery = { __typename?: 'Query', launches: { __typename?: 'LaunchConnection', cursor: number, hasMore: boolean, launches: Array<{ __typename: 'Launch', id: string, isBooked: boolean, rocket: { __typename?: 'Rocket', id: string, name: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } }> } };
+export type LaunchesQuery = { __typename?: 'Query', launches: { __typename?: 'LaunchConnection', cursor: number, hasMore: boolean, launches: Array<{ __typename: 'Launch', id: string, isBooked: boolean, site: string, rocket: { __typename?: 'Rocket', id: string, name: string, type: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } }> } };
 
-export type LaunchTileFragment = { __typename: 'Launch', id: string, isBooked: boolean, rocket: { __typename?: 'Rocket', id: string, name: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } };
+export type LaunchQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type LaunchQuery = { __typename?: 'Query', launch: { __typename: 'Launch', id: string, isBooked: boolean, site: string, rocket: { __typename?: 'Rocket', id: string, name: string, type: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } } };
+
+export type LaunchFragment = { __typename: 'Launch', id: string, isBooked: boolean, site: string, rocket: { __typename?: 'Rocket', id: string, name: string, type: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } };
 
 export type BookTripsMutationVariables = Exact<{
   launchIds: Array<Maybe<Scalars['ID']>> | Maybe<Scalars['ID']>;
@@ -154,7 +154,7 @@ export type GetCartItemsQuery = { __typename?: 'Query', cartItems: Array<string>
 export type UserProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserProfileQuery = { __typename?: 'Query', userProfile?: Maybe<{ __typename?: 'UserProfile', id: string, email: string, token?: Maybe<string>, trips: Array<{ __typename: 'Launch', id: string, isBooked: boolean, rocket: { __typename?: 'Rocket', id: string, name: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } }> }> };
+export type UserProfileQuery = { __typename?: 'Query', userProfile?: Maybe<{ __typename?: 'UserProfile', id: string, email: string, token?: Maybe<string>, trips: Array<{ __typename: 'Launch', id: string, isBooked: boolean, site: string, rocket: { __typename?: 'Rocket', id: string, name: string, type: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } }> }> };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -163,14 +163,16 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserProfile', id: string, token?: Maybe<string> } };
 
-export const LaunchTileFragmentDoc = gql`
-    fragment LaunchTile on Launch {
+export const LaunchFragmentDoc = gql`
+    fragment LaunchFragment on Launch {
   __typename
   id
   isBooked
+  site
   rocket {
     id
     name
+    type
   }
   mission {
     name
@@ -178,56 +180,17 @@ export const LaunchTileFragmentDoc = gql`
   }
 }
     `;
-export const LaunchDocument = gql`
-    query Launch($launchId: ID!) {
-  launch(id: $launchId) {
-    site
-    rocket {
-      type
-    }
-    ...LaunchTile
-  }
-}
-    ${LaunchTileFragmentDoc}`;
-
-/**
- * __useLaunchQuery__
- *
- * To run a query within a React component, call `useLaunchQuery` and pass it any options that fit your needs.
- * When your component renders, `useLaunchQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useLaunchQuery({
- *   variables: {
- *      launchId: // value for 'launchId'
- *   },
- * });
- */
-export function useLaunchQuery(baseOptions: Apollo.QueryHookOptions<LaunchQuery, LaunchQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<LaunchQuery, LaunchQueryVariables>(LaunchDocument, options);
-      }
-export function useLaunchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LaunchQuery, LaunchQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<LaunchQuery, LaunchQueryVariables>(LaunchDocument, options);
-        }
-export type LaunchQueryHookResult = ReturnType<typeof useLaunchQuery>;
-export type LaunchLazyQueryHookResult = ReturnType<typeof useLaunchLazyQuery>;
-export type LaunchQueryResult = Apollo.QueryResult<LaunchQuery, LaunchQueryVariables>;
 export const LaunchesDocument = gql`
     query Launches($after: Int) {
   launches(after: $after) {
     cursor
     hasMore
     launches {
-      ...LaunchTile
+      ...LaunchFragment
     }
   }
 }
-    ${LaunchTileFragmentDoc}`;
+    ${LaunchFragmentDoc}`;
 
 /**
  * __useLaunchesQuery__
@@ -256,6 +219,41 @@ export function useLaunchesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<L
 export type LaunchesQueryHookResult = ReturnType<typeof useLaunchesQuery>;
 export type LaunchesLazyQueryHookResult = ReturnType<typeof useLaunchesLazyQuery>;
 export type LaunchesQueryResult = Apollo.QueryResult<LaunchesQuery, LaunchesQueryVariables>;
+export const LaunchDocument = gql`
+    query Launch($id: ID!) {
+  launch(id: $id) {
+    ...LaunchFragment
+  }
+}
+    ${LaunchFragmentDoc}`;
+
+/**
+ * __useLaunchQuery__
+ *
+ * To run a query within a React component, call `useLaunchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLaunchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLaunchQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useLaunchQuery(baseOptions: Apollo.QueryHookOptions<LaunchQuery, LaunchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<LaunchQuery, LaunchQueryVariables>(LaunchDocument, options);
+      }
+export function useLaunchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LaunchQuery, LaunchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<LaunchQuery, LaunchQueryVariables>(LaunchDocument, options);
+        }
+export type LaunchQueryHookResult = ReturnType<typeof useLaunchQuery>;
+export type LaunchLazyQueryHookResult = ReturnType<typeof useLaunchLazyQuery>;
+export type LaunchQueryResult = Apollo.QueryResult<LaunchQuery, LaunchQueryVariables>;
 export const BookTripsDocument = gql`
     mutation BookTrips($launchIds: [ID]!) {
   bookTrips(launchIds: $launchIds) {
@@ -403,11 +401,11 @@ export const UserProfileDocument = gql`
     email
     token
     trips {
-      ...LaunchTile
+      ...LaunchFragment
     }
   }
 }
-    ${LaunchTileFragmentDoc}`;
+    ${LaunchFragmentDoc}`;
 
 /**
  * __useUserProfileQuery__
