@@ -13,15 +13,17 @@ export const Profile: React.FC = () => {
     if (error) return <p>ERROR: {error.message}</p>;
     if (!data) return <p>No data</p>;
 
-    const tripsListJSX = data?.userProfile?.trips.map(launch => {
-        return <LaunchTile key={launch?.id} launch={launch} />;
-    }) ?? <p>You haven't booked any trips</p>;
+    const tripsListJSX =
+        data.userProfile?.trips.map(launch => {
+            return <LaunchTile key={launch.id} launch={launch} />;
+        }) ?? [];
 
     return (
         <>
             <Header>My Trips</Header>
 
             {tripsListJSX}
+            {!tripsListJSX.length && <p>You haven't booked any trips</p>}
         </>
     );
 };
