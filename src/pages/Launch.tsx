@@ -24,6 +24,7 @@ export const Launch: React.FC = () => {
             </Header>
 
             <LaunchDetail {...data.launch} />
+
             <ActionButton {...data.launch} />
         </>
     );

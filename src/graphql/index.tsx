@@ -107,7 +107,7 @@ export type UserProfile = {
   __typename?: 'UserProfile';
   email: Scalars['String'];
   id: Scalars['ID'];
-  token: Scalars['String'];
+  token?: Maybe<Scalars['String']>;
   trips: Array<Launch>;
 };
 
@@ -154,14 +154,14 @@ export type GetCartItemsQuery = { __typename?: 'Query', cartItems: Array<string>
 export type UserProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserProfileQuery = { __typename?: 'Query', userProfile?: Maybe<{ __typename?: 'UserProfile', id: string, email: string, token: string, trips: Array<{ __typename: 'Launch', id: string, isBooked: boolean, rocket: { __typename?: 'Rocket', id: string, name: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } }> }> };
+export type UserProfileQuery = { __typename?: 'Query', userProfile?: Maybe<{ __typename?: 'UserProfile', id: string, email: string, token?: Maybe<string>, trips: Array<{ __typename: 'Launch', id: string, isBooked: boolean, rocket: { __typename?: 'Rocket', id: string, name: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } }> }> };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserProfile', id: string, token: string } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserProfile', id: string, token?: Maybe<string> } };
 
 export const LaunchTileFragmentDoc = gql`
     fragment LaunchTile on Launch {

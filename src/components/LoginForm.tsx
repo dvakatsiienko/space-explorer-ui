@@ -5,6 +5,8 @@ import { size } from 'polished';
 
 /* Components */
 import { Button } from './Button';
+
+/* Instruments */
 import space from '../assets/images/space.jpg';
 import { ReactComponent as Logo } from '../assets/logo.svg';
 import { ReactComponent as Curve } from '../assets/curve.svg';
@@ -41,7 +43,6 @@ export const LoginForm: React.FC<LoginFormProps> = props => {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    data-testid="login-input"
                     onChange={onChange}
                 />
                 <Button type="submit">Log in</Button>

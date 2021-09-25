@@ -17,8 +17,11 @@ export const Login = () => {
             if (login) {
                 isLoggedInVar(true);
                 navigate('/launches');
-                localStorage.setItem('token', login.token);
-                localStorage.setItem('userId', login.id);
+
+                if (login.token) {
+                    localStorage.setItem('token', login.token);
+                    localStorage.setItem('userId', login.id);
+                }
             }
         },
     });

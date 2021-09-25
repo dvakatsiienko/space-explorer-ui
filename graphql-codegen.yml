@@ -1,6 +1,6 @@
 schema:
-    - ${GQL_URL}
-    - src/graphql/client-schema.graphql
+    - ${REACT_APP_GQL_URL}
+    - src/graphql/schema/client-schema.graphql
 documents: 'src/graphql/**/*.graphql'
 
 generates:
