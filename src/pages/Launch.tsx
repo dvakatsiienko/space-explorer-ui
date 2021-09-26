@@ -2,7 +2,9 @@
 import { useParams } from 'react-router-dom';
 
 /* Components */
-import { Header, LaunchDetail, Loading, ActionButton } from '../components';
+import {
+    Header, LaunchDetail, Loading, TripButton
+} from '../components';
 
 /* Instruments */
 import * as gql from '../graphql';
@@ -19,13 +21,14 @@ export const Launch: React.FC = () => {
 
     return (
         <>
-            <Header image={data.launch?.mission?.missionPatch}>
-                {data.launch?.mission?.name}
-            </Header>
+            <Header
+                image = { data.launch?.mission?.missionPatch }
+                title = { data.launch?.mission?.name }
+            />
 
-            <LaunchDetail launch={data.launch} />
+            <LaunchDetail launch = { data.launch } />
 
-            <ActionButton launch={data.launch} />
+            <TripButton launch = { data.launch } />
         </>
     );
 };

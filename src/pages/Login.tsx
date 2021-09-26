@@ -10,7 +10,7 @@ import { isLoggedInVar } from '../lib/cache';
 
 export const Login = () => {
     const navigate = useNavigate();
-    const [login, { loading, error }] = gql.useLoginMutation({
+    const [ loginMutation, { loading, error }] = gql.useLoginMutation({
         onCompleted(response) {
             const { login } = response;
 
@@ -29,5 +29,5 @@ export const Login = () => {
     if (loading) return <Loading />;
     if (error) return <p>An error occurred</p>;
 
-    return <LoginForm login={login} />;
+    return <LoginForm login = { loginMutation } />;
 };

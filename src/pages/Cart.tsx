@@ -1,5 +1,7 @@
 /* Components */
-import { Header, Loading, CartItem, BookTrips } from '../components';
+import {
+    Header, Loading, CartItem, BookTrips
+} from '../components';
 
 /* Instruments */
 import * as gql from '../graphql';
@@ -12,17 +14,17 @@ export const Cart: React.FC = () => {
 
     return (
         <>
-            <Header>My Cart</Header>
+            <Header title = 'My Cart' />
 
             {data?.cartItems?.length === 0 ? (
                 <p>No items in your cart</p>
             ) : (
                 <>
-                    {data?.cartItems.map((launchId: any) => (
-                        <CartItem key={launchId} launchId={launchId} />
+                    {data?.cartItems.map(launchId => (
+                        <CartItem key = { launchId } launchId = { launchId } />
                     ))}
 
-                    <BookTrips cartItems={data?.cartItems ?? []} />
+                    <BookTrips cartItems = { data?.cartItems ?? [] } />
                 </>
             )}
         </>

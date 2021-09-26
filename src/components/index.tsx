@@ -1,4 +1,3 @@
-export { Button } from './Button';
 export { Header } from './Header';
 export { Footer } from './Footer';
 export { Loading } from './Loading';
@@ -9,4 +8,4 @@ export { MenuItem } from './MenuItem';
 export { PageContainer } from './PageContainer';
 export { CartItem } from './CartItem';
 export { BookTrips } from './BookTrips';
-export { ActionButton } from './ActionButton';
+export { TripButton, Button } from './TripButton';

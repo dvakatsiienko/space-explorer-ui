@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 /* Instruments */
 import { isLoggedInVar } from '../../lib/cache';
-import { menuItemClassName } from '../../components/MenuItem';
+import { menuItemClassName } from '../MenuItem';
 import { ReactComponent as ExitIcon } from '../../assets/icons/exit.svg';
 
 export const LogoutButton: React.FC = () => {
@@ -24,7 +24,7 @@ export const LogoutButton: React.FC = () => {
     };
 
     return (
-        <StyledButton onClick={logout}>
+        <StyledButton onClick = { logout }>
             <ExitIcon />
             Logout
         </StyledButton>
@@ -35,8 +35,8 @@ export const LogoutButton: React.FC = () => {
 const StyledButton = styled('button')(
     {
         background: 'none',
-        border: 'none',
-        padding: 0,
+        border:     'none',
+        padding:    0,
     },
     menuItemClassName,
 );

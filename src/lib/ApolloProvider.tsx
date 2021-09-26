@@ -5,7 +5,7 @@ import {
     NormalizedCacheObject,
     gql,
     HttpLink,
-    from,
+    from
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
@@ -58,7 +58,7 @@ const authLink = setContext((_, prevCtx) => {
     return ctx;
 });
 
-const link = from([loggerLink, errorLink, authLink, httpLink]);
+const link = from([ loggerLink, errorLink, authLink, httpLink ]);
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
     cache,
@@ -68,7 +68,7 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 
 export const ApolloProvider: React.FC = props => {
     return (
-        <NativeApolloProvider client={client}>
+        <NativeApolloProvider client = { client }>
             {props.children}
         </NativeApolloProvider>
     );

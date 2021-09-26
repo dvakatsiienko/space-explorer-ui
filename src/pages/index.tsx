@@ -5,7 +5,7 @@ import {
     Route,
     Navigate,
     useNavigate,
-    useLocation,
+    useLocation
 } from 'react-router-dom';
 
 /* Pages */
@@ -27,17 +27,18 @@ export const Pages: React.FC = () => {
     const location = useLocation();
 
     useEffect(() => {
-        location.pathname !== '/login' &&
+        if (location.pathname !== '/login') {
             navigate('/launches', { replace: true });
+        }
 
         if (!data?.isLoggedIn && location.pathname !== '/login') {
             navigate('/login', { replace: true });
         } else if (data?.isLoggedIn && location.pathname === '/login') {
             navigate('/launches', { replace: true });
         } else if (
-            (data?.isLoggedIn && location.pathname.startsWith('/launches')) ||
-            location.pathname.startsWith('/carts') ||
-            location.pathname.startsWith('/profile')
+            (data?.isLoggedIn && location.pathname.startsWith('/launches'))
+            || location.pathname.startsWith('/carts')
+            || location.pathname.startsWith('/profile')
         ) {
             navigate('/launches', { replace: true });
         }
@@ -46,16 +47,16 @@ export const Pages: React.FC = () => {
     return (
         <>
             <Routes>
-                <Route path="/" element={<PageContainer />}>
-                    <Route path="launches" element={<Launches />} />
-                    <Route path="launches/:launchId" element={<Launch />} />
-                    <Route path="cart" element={<Cart />} />
-                    <Route path="profile" element={<Profile />} />
+                <Route element = { <PageContainer /> } path = '/'>
+                    <Route element = { <Launches /> } path = 'launches' />
+                    <Route element = { <Launch /> } path = 'launches/:launchId' />
+                    <Route element = { <Cart /> } path = 'cart' />
+                    <Route element = { <Profile /> } path = 'profile' />
                 </Route>
 
-                <Route path="login" element={<Login />} />
+                <Route element = { <Login /> } path = 'login' />
 
-                <Route path="*" element={<Navigate to="/" />} />
+                <Route element = { <Navigate to = '/' /> } path = '*' />
             </Routes>
 
             {data?.isLoggedIn && <Footer />}

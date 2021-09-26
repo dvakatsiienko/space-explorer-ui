@@ -3,12 +3,12 @@ import { createGlobalStyle } from 'styled-components';
 
 export const SPACING = 8;
 export const COLORS = {
-    primary: '#220a82',
-    secondary: '#14cbc4',
-    accent: '#e535ab',
-    background: '#f7f8fa',
-    grey: '#d8d9e0',
-    text: '#343c5a',
+    primary:       '#220a82',
+    secondary:     '#14cbc4',
+    accent:        '#e535ab',
+    background:    '#f7f8fa',
+    grey:          '#d8d9e0',
+    text:          '#343c5a',
     textSecondary: '#747790',
 };
 

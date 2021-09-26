@@ -16,7 +16,7 @@ const formatMessage = (operationType: any, operation: any, ellapsed: any) => {
         headerCss.push('color: gray; font-weight: lighter;'); // time
     }
 
-    return [parts.join(' '), ...headerCss];
+    return [ parts.join(' '), ...headerCss ];
 };
 
 export default formatMessage;

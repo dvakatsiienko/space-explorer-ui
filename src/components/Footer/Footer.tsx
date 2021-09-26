@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { MenuItem } from '../MenuItem';
 import { LogoutButton } from './LogoutButton';
 
+/* Instruments */
 import { ReactComponent as HomeIcon } from '../../assets/icons/home.svg';
 import { ReactComponent as CartIcon } from '../../assets/icons/cart.svg';
 import { ReactComponent as ProfileIcon } from '../../assets/icons/profile.svg';
@@ -14,17 +15,17 @@ export const Footer = () => {
     return (
         <Container>
             <InnerContainer>
-                <MenuItem to="/launches">
+                <MenuItem to = '/launches'>
                     <HomeIcon />
                     Home
                 </MenuItem>
 
-                <MenuItem to="/cart">
+                <MenuItem to = '/cart'>
                     <CartIcon />
                     Cart
                 </MenuItem>
 
-                <MenuItem to="/profile">
+                <MenuItem to = '/profile'>
                     <ProfileIcon />
                     Profile
                 </MenuItem>
@@ -37,18 +38,18 @@ export const Footer = () => {
 
 /* Styles */
 const Container = styled('footer')({
-    flexShrink: 0,
-    marginTop: 'auto',
+    flexShrink:      0,
+    marginTop:       'auto',
     backgroundColor: 'white',
-    color: COLORS.textSecondary,
-    position: 'sticky',
-    bottom: 0,
+    color:           COLORS.textSecondary,
+    position:        'sticky',
+    bottom:          0,
 });
 
 const InnerContainer = styled('div')({
-    display: 'flex',
+    display:    'flex',
     alignItems: 'center',
-    maxWidth: 460,
-    padding: SPACING * 2.5,
-    margin: '0 auto',
+    maxWidth:   460,
+    padding:    SPACING * 2.5,
+    margin:     '0 auto',
 });
