@@ -57,8 +57,8 @@ export const TripButton: React.FC<TripButtonProps> = props => {
             onClick = { isBooked ? () => cancelTripMutation() : toggleTripInCart }
         >
             {isBooked && 'Cancel Trip'}
-            {isBooked && isInCart && 'Remove from Cart'}
-            {isBooked && !isInCart && 'Add to Cart'}
+            {!isBooked && isInCart && 'Remove from Cart'}
+            {!isBooked && !isInCart && 'Add to Cart'}
         </Button>
     );
 };
