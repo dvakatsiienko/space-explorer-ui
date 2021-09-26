@@ -1,12 +1,12 @@
 /* Components */
-import { Button } from '../components';
+import { Button } from '.';
 
 /* Instruments */
 import * as gql from '../graphql';
 import { cartItemsVar } from '../lib/cache';
 
 export const BookTrips: React.FC<BookTripsProps> = props => {
-    const [bookTrips, { data }] = gql.useBookTripsMutation({
+    const [ bookTrips, { data }] = gql.useBookTripsMutation({
         variables: { launchIds: props.cartItems },
         onCompleted() {
             cartItemsVar([]);
@@ -16,7 +16,7 @@ export const BookTrips: React.FC<BookTripsProps> = props => {
     return data && data.bookTrips && !data.bookTrips.success ? (
         <p>{data.bookTrips.message}</p>
     ) : (
-        <Button onClick={() => bookTrips()}>Book All</Button>
+        <Button onClick = { () => bookTrips() }>Book All</Button>
     );
 };
 

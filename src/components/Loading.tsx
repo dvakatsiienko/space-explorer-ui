@@ -14,10 +14,10 @@ const spin = css`
 
 export const Loading = styled(Logo)(size(64), {
     display: 'block',
-    margin: 'auto',
-    fill: COLORS.grey,
-    path: {
+    margin:  'auto',
+    fill:    COLORS.grey,
+    path:    {
         transformOrigin: 'center',
-        animation: `${spin} 1s linear infinite`,
+        animation:       `${spin} 1s linear infinite`,
     },
 });

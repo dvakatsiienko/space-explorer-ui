@@ -12,10 +12,11 @@ import { SPACING } from '../styles';
 export const LaunchTile: React.FC<LaunchTileProps> = props => {
     return (
         <StyledLink
-            to={`/launches/${props.launch.id}`}
-            style={{
+            style = {{
                 backgroundImage: getBackgroundImage(props.launch.flightNumber),
-            }}>
+            }}
+            to = { `/launches/${props.launch.id}` }
+        >
             <h3>{props.launch.mission.name}</h3>
             <h5>{props.launch.rocket.name}</h5>
         </StyledLink>
@@ -24,20 +25,20 @@ export const LaunchTile: React.FC<LaunchTileProps> = props => {
 
 /* Styles */
 export const cardClassName = css({
-    padding: `${SPACING * 4}px ${SPACING * 5}px`,
-    borderRadius: 7,
-    color: 'white',
-    backgroundSize: 'cover',
+    padding:            `${SPACING * 4}px ${SPACING * 5}px`,
+    borderRadius:       7,
+    color:              'white',
+    backgroundSize:     'cover',
     backgroundPosition: 'center',
 });
 
 const padding = SPACING * 2;
 const StyledLink = styled(Link)(
     {
-        display: 'block',
-        height: 193,
-        marginTop: padding,
-        textDecoration: 'none',
+        display:             'block',
+        height:              193,
+        marginTop:           padding,
+        textDecoration:      'none',
         ':not(:last-child)': {
             marginBottom: padding * 2,
         },
@@ -46,12 +47,12 @@ const StyledLink = styled(Link)(
 );
 
 /* Helpers */
-const backgrounds = [galaxy, iss, moon];
+const backgrounds = [ galaxy, iss, moon ];
 
 export function getBackgroundImage(flightNumber: number) {
     const bg = flightNumber % backgrounds.length;
 
-    return `url(${backgrounds[bg]})`;
+    return `url(${backgrounds[ bg ]})`;
 }
 
 /* Types */

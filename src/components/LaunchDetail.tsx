@@ -13,9 +13,10 @@ export const LaunchDetail: React.FC<LaunchDetailProps> = props => {
 
     return (
         <Card
-            style={{
+            style = {{
                 backgroundImage: getBackgroundImage(props.launch.flightNumber),
-            }}>
+            }}
+        >
             <h3>
                 {rocket.name} ({rocket.type})
             </h3>
@@ -27,7 +28,7 @@ export const LaunchDetail: React.FC<LaunchDetailProps> = props => {
 /* Styles */
 const Card = styled('div')(
     {
-        height: 365,
+        height:       365,
         marginBottom: SPACING * 4,
     },
     cardClassName,

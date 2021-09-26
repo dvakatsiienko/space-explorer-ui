@@ -1,5 +1,5 @@
 /* Components */
-import { LaunchTile } from '../components';
+import { LaunchTile } from '.';
 
 /* Instruments */
 import * as gql from '../graphql';
@@ -13,7 +13,7 @@ export const CartItem: React.FC<CartItemProps> = props => {
     if (error) return <p>ERROR: {error.message}</p>;
     if (!data) return <p>Not found</p>;
 
-    return <LaunchTile launch={data.launch} />;
+    return <LaunchTile launch = { data.launch } />;
 };
 
 /* Types */
