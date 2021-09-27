@@ -27,20 +27,10 @@ export const Pages: React.FC = () => {
     const location = useLocation();
 
     useEffect(() => {
-        if (location.pathname !== '/login') {
-            navigate('/launches', { replace: true });
-        }
-
-        if (!data?.isLoggedIn && location.pathname !== '/login') {
-            navigate('/login', { replace: true });
-        } else if (data?.isLoggedIn && location.pathname === '/login') {
-            navigate('/launches', { replace: true });
-        } else if (
-            (data?.isLoggedIn && location.pathname.startsWith('/launches'))
-            || location.pathname.startsWith('/carts')
-            || location.pathname.startsWith('/profile')
-        ) {
-            navigate('/launches', { replace: true });
+        if (location.pathname === '/') {
+            navigate(data?.isLoggedIn ? '/launches' : '/login', {
+                replace: true,
+            });
         }
     }, []);
 
@@ -52,11 +42,18 @@ export const Pages: React.FC = () => {
                     <Route element = { <Launch /> } path = 'launches/:launchId' />
                     <Route element = { <Cart /> } path = 'cart' />
                     <Route element = { <Profile /> } path = 'profile' />
+
+                    <Route
+                        element = { (
+                            <Navigate
+                                to = { data?.isLoggedIn ? '/launches' : '/login' }
+                            />
+                        ) }
+                        path = '*'
+                    />
                 </Route>
 
                 <Route element = { <Login /> } path = 'login' />
-
-                <Route element = { <Navigate to = '/' /> } path = '*' />
             </Routes>
 
             {data?.isLoggedIn && <Footer />}

@@ -10,7 +10,8 @@
         "codegen:graphql": "gql-gen -r dotenv/config --config \"./graphql-codegen.yml\""
     },
     "dependencies": {
-        "@apollo/client": "3.4.13",
+        "@apollo/client": "3.4.14",
+        "apollo-link-logger": "2.0.0",
         "debug": "4.3.2",
         "graphql": "15.6.0",
         "history": "5.0.1",

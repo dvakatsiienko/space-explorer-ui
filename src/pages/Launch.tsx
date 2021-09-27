@@ -14,10 +14,17 @@ export const Launch: React.FC = () => {
     const { data, loading, error } = gql.useLaunchQuery({
         variables: { id: params.launchId },
     });
+    const userProfileQuery = gql.useUserProfileQuery({
+        fetchPolicy: 'network-only',
+    });
 
-    if (loading) return <Loading />;
+    if (loading || userProfileQuery.loading) return <Loading />;
     if (error) return <p>ERROR: {error.message}</p>;
-    if (!data) return <p>Not found</p>;
+    if (!data || !userProfileQuery.data?.userProfile) return <p>Not found</p>;
+
+    const tripId = userProfileQuery.data?.userProfile?.trips.find(
+        _trip => _trip.launch.id === params.launchId,
+    )?.id ?? '';
 
     return (
         <>
@@ -28,7 +35,7 @@ export const Launch: React.FC = () => {
 
             <LaunchDetail launch = { data.launch } />
 
-            <TripButton launch = { data.launch } />
+            <TripButton launch = { data.launch } tripId = { tripId } />
         </>
     );
 };

@@ -17,8 +17,16 @@ export const LaunchTile: React.FC<LaunchTileProps> = props => {
             }}
             to = { `/launches/${props.launch.id}` }
         >
-            <h3>{props.launch.mission.name}</h3>
-            <h5>{props.launch.rocket.name}</h5>
+            <h3>Mission: {props.launch.mission.name}</h3>
+            <h5>Rocket: {props.launch.rocket.name}</h5>
+            {props.trip && (
+                <h5>
+                    Booked at:{' '}
+                    {new Date(props.trip.createdAt).toLocaleDateString()}
+                    &nbsp;
+                    {new Date(props.trip.createdAt).toLocaleTimeString()}
+                </h5>
+            )}
         </StyledLink>
     );
 };
@@ -58,4 +66,5 @@ export function getBackgroundImage(flightNumber: number) {
 /* Types */
 interface LaunchTileProps {
     launch: gql.LaunchFragment;
+    trip?: gql.Trip;
 }

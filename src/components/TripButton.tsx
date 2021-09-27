@@ -8,7 +8,7 @@ import { SPACING, COLORS } from '../styles';
 
 /* Instruments */
 import * as gql from '../graphql';
-import { cartItemsVar } from '../lib/cache';
+import { cartItemsVar } from '../lib/typePolicies';
 
 export const TripButton: React.FC<TripButtonProps> = props => {
     const { isBooked, id } = props.launch;
@@ -17,14 +17,8 @@ export const TripButton: React.FC<TripButtonProps> = props => {
     const isInCart = id ? cartItems.includes(id) : false;
 
     const [ cancelTripMutation, { loading, error }] = gql.useCancelTripMutation({
-        variables: { launchId: id },
-        update(cache, response) {
-            const cancelTrip = response.data?.cancelTrip;
-
-            // Update the user's cached list of trips to remove the trip that
-            // was just canceled.
-            const launch = cancelTrip?.launches[ 0 ];
-
+        variables: { tripId: props.tripId },
+        update(cache) {
             cache.modify({
                 id: cache.identify({
                     __typename: 'UserProfile',
@@ -33,7 +27,7 @@ export const TripButton: React.FC<TripButtonProps> = props => {
                 fields: {
                     trips(existingTrips: Reference[], { readField }) {
                         return existingTrips.filter(
-                            tripRef => readField('id', tripRef) !== launch?.id,
+                            tripRef => readField('id', tripRef) !== props.tripId,
                         );
                     },
                 },
@@ -94,4 +88,5 @@ export const Button = styled('button')({
 /* Types */
 interface TripButtonProps {
     launch: gql.LaunchFragment;
+    tripId: string;
 }

@@ -3,10 +3,10 @@ import { Button } from '.';
 
 /* Instruments */
 import * as gql from '../graphql';
-import { cartItemsVar } from '../lib/cache';
+import { cartItemsVar } from '../lib/typePolicies';
 
 export const BookTrips: React.FC<BookTripsProps> = props => {
-    const [ bookTrips, { data }] = gql.useBookTripsMutation({
+    const [ bookTripsMutation, { data }] = gql.useBookTripsMutation({
         variables: { launchIds: props.cartItems },
         onCompleted() {
             cartItemsVar([]);
@@ -16,7 +16,7 @@ export const BookTrips: React.FC<BookTripsProps> = props => {
     return data && data.bookTrips && !data.bookTrips.success ? (
         <p>{data.bookTrips.message}</p>
     ) : (
-        <Button onClick = { () => bookTrips() }>Book All</Button>
+        <Button onClick = { () => bookTripsMutation() }>Book All</Button>
     );
 };
 

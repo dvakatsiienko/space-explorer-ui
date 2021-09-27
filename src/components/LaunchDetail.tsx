@@ -18,9 +18,9 @@ export const LaunchDetail: React.FC<LaunchDetailProps> = props => {
             }}
         >
             <h3>
-                {rocket.name} ({rocket.type})
+                Rocket: {rocket.name} ({rocket.type})
             </h3>
-            <h5>{site}</h5>
+            <h5>Launch site: {site}</h5>
         </Card>
     );
 };

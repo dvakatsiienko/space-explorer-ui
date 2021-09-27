@@ -1,5 +1,5 @@
 # Mutation
-mutation BookTrips($launchIds: [ID]!) {
+mutation BookTrips($launchIds: [ID!]!) {
     bookTrips(launchIds: $launchIds) {
         success
         message
@@ -10,8 +10,8 @@ mutation BookTrips($launchIds: [ID]!) {
     }
 }
 
-mutation cancelTrip($launchId: ID!) {
-    cancelTrip(launchId: $launchId) {
+mutation cancelTrip($tripId: ID!) {
+    cancelTrip(tripId: $tripId) {
         success
         message
         launches {

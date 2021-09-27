@@ -1,4 +1,5 @@
 /* Core */
+import { ApolloProvider } from '@apollo/client';
 import { render } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -6,13 +7,13 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Pages } from './pages';
 
 /* Instruments */
-import { ApolloProvider } from './lib/ApolloProvider';
+import { client } from './lib/client';
 import { GlobalStyle } from './styles';
 
 render(
     <>
         <Router>
-            <ApolloProvider>
+            <ApolloProvider client = { client }>
                 <Pages />
             </ApolloProvider>
         </Router>
