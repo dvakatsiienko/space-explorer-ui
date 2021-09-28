@@ -45,7 +45,9 @@ export const cartItemsVar = makeVar<string[]>([]);
 
 /* Types */
 type TQueryFieldPolicy = Omit<gql.QueryFieldPolicy, 'launches'> & {
-    launches: FieldPolicy<gql.Launches> | FieldReadFunction<gql.Launches>;
+    launches:
+        | FieldPolicy<gql.LaunchesPayload>
+        | FieldReadFunction<gql.LaunchesPayload>;
 };
 type TTypePolicy = Omit<TypePolicy, 'fields'> & {
     fields: TQueryFieldPolicy;

@@ -1,11 +1,14 @@
+export { PageContainer } from './PageContainer';
 export { Header } from './Header';
 export { Footer } from './Footer';
 export { Loading } from './Loading';
+export { LoginForm } from './LoginForm';
+
 export { LaunchDetail } from './LaunchDetail';
 export { LaunchTile } from './LaunchTile';
-export { LoginForm } from './LoginForm';
+
 export { MenuItem } from './MenuItem';
-export { PageContainer } from './PageContainer';
 export { CartItem } from './CartItem';
-export { BookTrips } from './BookTrips';
+
+export { BookTripsButton } from './BookTripsButton';
 export { TripButton, Button } from './TripButton';

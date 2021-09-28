@@ -26,8 +26,8 @@ export type Launch = {
   site: Scalars['String'];
 };
 
-export type Launches = {
-  __typename?: 'Launches';
+export type LaunchesPayload = {
+  __typename?: 'LaunchesPayload';
   cursor: Scalars['Int'];
   hasMore: Scalars['Boolean'];
   list: Array<Launch>;
@@ -46,8 +46,8 @@ export type MissionMissionPatchArgs = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  bookTrips: TripUpdateResponse;
-  cancelTrip: TripUpdateResponse;
+  bookTrips: Array<Trip>;
+  cancelTrip: Scalars['Boolean'];
   login: UserProfile;
 };
 
@@ -76,7 +76,7 @@ export type Query = {
   cartItems: Array<Scalars['ID']>;
   isLoggedIn: Scalars['Boolean'];
   launch: Launch;
-  launches: Launches;
+  launches: LaunchesPayload;
   userProfile?: Maybe<UserProfile>;
 };
 
@@ -105,13 +105,6 @@ export type Trip = {
   launch: Launch;
 };
 
-export type TripUpdateResponse = {
-  __typename?: 'TripUpdateResponse';
-  launches: Array<Launch>;
-  message: Scalars['String'];
-  success: Scalars['Boolean'];
-};
-
 export type UserProfile = {
   __typename?: 'UserProfile';
   email: Scalars['String'];
@@ -125,7 +118,7 @@ export type LaunchesQueryVariables = Exact<{
 }>;
 
 
-export type LaunchesQuery = { __typename?: 'Query', launches: { __typename?: 'Launches', cursor: number, hasMore: boolean, list: Array<{ __typename?: 'Launch', id: string, isBooked: boolean, flightNumber: number, site: string, rocket: { __typename?: 'Rocket', id: string, name: string, type: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } }> } };
+export type LaunchesQuery = { __typename?: 'Query', launches: { __typename?: 'LaunchesPayload', cursor: number, hasMore: boolean, list: Array<{ __typename?: 'Launch', id: string, isBooked: boolean, flightNumber: number, site: string, rocket: { __typename?: 'Rocket', id: string, name: string, type: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } }> } };
 
 export type LaunchQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -141,14 +134,14 @@ export type BookTripsMutationVariables = Exact<{
 }>;
 
 
-export type BookTripsMutation = { __typename?: 'Mutation', bookTrips: { __typename?: 'TripUpdateResponse', success: boolean, message: string, launches: Array<{ __typename?: 'Launch', id: string, isBooked: boolean }> } };
+export type BookTripsMutation = { __typename?: 'Mutation', bookTrips: Array<{ __typename?: 'Trip', id: string, createdAt?: Maybe<any>, launch: { __typename?: 'Launch', id: string, isBooked: boolean, flightNumber: number, site: string, rocket: { __typename?: 'Rocket', id: string, name: string, type: string }, mission: { __typename?: 'Mission', name: string, missionPatch: string } } }> };
 
 export type CancelTripMutationVariables = Exact<{
   tripId: Scalars['ID'];
 }>;
 
 
-export type CancelTripMutation = { __typename?: 'Mutation', cancelTrip: { __typename?: 'TripUpdateResponse', success: boolean, message: string, launches: Array<{ __typename?: 'Launch', id: string, isBooked: boolean }> } };
+export type CancelTripMutation = { __typename?: 'Mutation', cancelTrip: boolean };
 
 export type IsUserLoggedInQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -266,15 +259,14 @@ export type LaunchQueryResult = Apollo.QueryResult<LaunchQuery, LaunchQueryVaria
 export const BookTripsDocument = gql`
     mutation BookTrips($launchIds: [ID!]!) {
   bookTrips(launchIds: $launchIds) {
-    success
-    message
-    launches {
-      id
-      isBooked
+    id
+    createdAt
+    launch {
+      ...LaunchFragment
     }
   }
 }
-    `;
+    ${LaunchFragmentDoc}`;
 export type BookTripsMutationFn = Apollo.MutationFunction<BookTripsMutation, BookTripsMutationVariables>;
 
 /**
@@ -303,14 +295,7 @@ export type BookTripsMutationResult = Apollo.MutationResult<BookTripsMutation>;
 export type BookTripsMutationOptions = Apollo.BaseMutationOptions<BookTripsMutation, BookTripsMutationVariables>;
 export const CancelTripDocument = gql`
     mutation cancelTrip($tripId: ID!) {
-  cancelTrip(tripId: $tripId) {
-    success
-    message
-    launches {
-      id
-      isBooked
-    }
-  }
+  cancelTrip(tripId: $tripId)
 }
     `;
 export type CancelTripMutationFn = Apollo.MutationFunction<CancelTripMutation, CancelTripMutationVariables>;
@@ -489,8 +474,8 @@ export type LaunchFieldPolicy = {
 	rocket?: FieldPolicy<any> | FieldReadFunction<any>,
 	site?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type LaunchesKeySpecifier = ('cursor' | 'hasMore' | 'list' | LaunchesKeySpecifier)[];
-export type LaunchesFieldPolicy = {
+export type LaunchesPayloadKeySpecifier = ('cursor' | 'hasMore' | 'list' | LaunchesPayloadKeySpecifier)[];
+export type LaunchesPayloadFieldPolicy = {
 	cursor?: FieldPolicy<any> | FieldReadFunction<any>,
 	hasMore?: FieldPolicy<any> | FieldReadFunction<any>,
 	list?: FieldPolicy<any> | FieldReadFunction<any>
@@ -526,12 +511,6 @@ export type TripFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	launch?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type TripUpdateResponseKeySpecifier = ('launches' | 'message' | 'success' | TripUpdateResponseKeySpecifier)[];
-export type TripUpdateResponseFieldPolicy = {
-	launches?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	success?: FieldPolicy<any> | FieldReadFunction<any>
-};
 export type UserProfileKeySpecifier = ('email' | 'id' | 'token' | 'trips' | UserProfileKeySpecifier)[];
 export type UserProfileFieldPolicy = {
 	email?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -544,9 +523,9 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | LaunchKeySpecifier | (() => undefined | LaunchKeySpecifier),
 		fields?: LaunchFieldPolicy,
 	},
-	Launches?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | LaunchesKeySpecifier | (() => undefined | LaunchesKeySpecifier),
-		fields?: LaunchesFieldPolicy,
+	LaunchesPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | LaunchesPayloadKeySpecifier | (() => undefined | LaunchesPayloadKeySpecifier),
+		fields?: LaunchesPayloadFieldPolicy,
 	},
 	Mission?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | MissionKeySpecifier | (() => undefined | MissionKeySpecifier),
@@ -567,10 +546,6 @@ export type StrictTypedTypePolicies = {
 	Trip?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | TripKeySpecifier | (() => undefined | TripKeySpecifier),
 		fields?: TripFieldPolicy,
-	},
-	TripUpdateResponse?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | TripUpdateResponseKeySpecifier | (() => undefined | TripUpdateResponseKeySpecifier),
-		fields?: TripUpdateResponseFieldPolicy,
 	},
 	UserProfile?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | UserProfileKeySpecifier | (() => undefined | UserProfileKeySpecifier),

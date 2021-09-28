@@ -1,22 +1,14 @@
 # Mutation
 mutation BookTrips($launchIds: [ID!]!) {
     bookTrips(launchIds: $launchIds) {
-        success
-        message
-        launches {
-            id
-            isBooked
+        id
+        createdAt
+        launch {
+            ...LaunchFragment
         }
     }
 }
 
 mutation cancelTrip($tripId: ID!) {
-    cancelTrip(tripId: $tripId) {
-        success
-        message
-        launches {
-            id
-            isBooked
-        }
-    }
+    cancelTrip(tripId: $tripId)
 }

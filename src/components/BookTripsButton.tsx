@@ -5,7 +5,7 @@ import { Button } from '.';
 import * as gql from '../graphql';
 import { cartItemsVar } from '../lib/typePolicies';
 
-export const BookTrips: React.FC<BookTripsProps> = props => {
+export const BookTripsButton: React.FC<BookTripsButtonProps> = props => {
     const [ bookTripsMutation, { data }] = gql.useBookTripsMutation({
         variables: { launchIds: props.cartItems },
         onCompleted() {
@@ -13,14 +13,14 @@ export const BookTrips: React.FC<BookTripsProps> = props => {
         },
     });
 
-    return data && data.bookTrips && !data.bookTrips.success ? (
-        <p>{data.bookTrips.message}</p>
-    ) : (
-        <Button onClick = { () => bookTripsMutation() }>Book All</Button>
-    );
+    if (data?.bookTrips.length) {
+        return <p>Trips booked.</p>;
+    }
+
+    return <Button onClick = { () => bookTripsMutation() }>Book All</Button>;
 };
 
 /* Types */
-interface BookTripsProps {
+interface BookTripsButtonProps {
     cartItems: string[];
 }

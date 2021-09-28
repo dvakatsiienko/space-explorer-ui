@@ -1,32 +1,30 @@
 /* Core */
-import { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { size } from 'polished';
+import { useForm } from 'react-hook-form';
 
 /* Components */
-import { Button } from './TripButton';
+import { Button } from '../TripButton';
 
 /* Instruments */
-import space from '../assets/images/space.jpg';
-import { ReactComponent as Logo } from '../assets/logo.svg';
-import { ReactComponent as Curve } from '../assets/curve.svg';
-import { ReactComponent as Rocket } from '../assets/rocket.svg';
-import { COLORS, SPACING } from '../styles';
+import * as gql from '../../graphql';
+import space from '../../assets/images/space.jpg';
+import { ReactComponent as Logo } from '../../assets/logo.svg';
+import { ReactComponent as Curve } from '../../assets/curve.svg';
+import { ReactComponent as Rocket } from '../../assets/rocket.svg';
+import { COLORS, SPACING } from '../../styles';
+import { resolver } from './resolver';
 
 export const LoginForm: React.FC<LoginFormProps> = props => {
-    const [ email, setEmail ] = useState('');
+    const form = useForm({
+        resolver,
+        defaultValues: { email: '' },
+        mode:          'all',
+    });
 
-    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const _email = (event.target as HTMLInputElement).value;
-
-        setEmail(_email);
-    };
-
-    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-        props.login({ variables: { email } });
-    };
+    const onSubmit = form.handleSubmit(values => {
+        props.loginMutation({ variables: { email: values.email } });
+    });
 
     return (
         <Container>
@@ -38,13 +36,10 @@ export const LoginForm: React.FC<LoginFormProps> = props => {
             <StyledRocket />
             <Heading>Space Explorer</Heading>
             <StyledForm onSubmit = { onSubmit }>
-                <StyledInput
-                    required
-                    name = 'email'
-                    placeholder = 'Email'
-                    type = 'email'
-                    onChange = { onChange }
-                />
+                <StyledInput placeholder = 'Email' { ...form.register('email') } />
+                <ErrorMessage>
+                    {form.formState.errors.email?.message ?? <>&nbsp;</>}
+                </ErrorMessage>
                 <Button type = 'submit'>Log in</Button>
             </StyledForm>
         </Container>
@@ -97,12 +92,7 @@ const Heading = styled('h1')({
     margin: `${SPACING * 3}px 0 ${SPACING * 6}px`,
 });
 
-const StyledRocket = styled(Rocket)(
-    {
-        width: 250,
-    },
-    svgClassName,
-);
+const StyledRocket = styled(Rocket)({ width: 250 }, svgClassName);
 
 const StyledForm = styled('form')({
     width:           '100%',
@@ -116,8 +106,8 @@ const StyledForm = styled('form')({
 
 const StyledInput = styled('input')({
     width:        '100%',
-    marginBottom: SPACING * 2,
     padding:      `${SPACING * 1.25}px ${SPACING * 2.5}px`,
+    marginBottom: SPACING,
     border:       `1px solid ${COLORS.grey}`,
     fontSize:     16,
     outline:      'none',
@@ -126,7 +116,14 @@ const StyledInput = styled('input')({
     },
 });
 
+const ErrorMessage = styled.span`
+    display: inline-block;
+    font-weight: 600;
+    color: red;
+    margin-bottom: ${SPACING * 2}px;
+`;
+
 /* Types */
 interface LoginFormProps {
-    login: (a: { variables: any }) => void;
+    loginMutation: gql.LoginMutationFn;
 }

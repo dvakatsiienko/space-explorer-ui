@@ -1,6 +1,6 @@
 /* Components */
 import {
-    Header, Loading, CartItem, BookTrips
+    Header, Loading, CartItem, BookTripsButton
 } from '../components';
 
 /* Instruments */
@@ -24,7 +24,7 @@ export const Cart: React.FC = () => {
                         <CartItem key = { launchId } launchId = { launchId } />
                     ))}
 
-                    <BookTrips cartItems = { data?.cartItems ?? [] } />
+                    <BookTripsButton cartItems = { data?.cartItems ?? [] } />
                 </>
             )}
         </>
