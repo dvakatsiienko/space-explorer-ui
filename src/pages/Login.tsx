@@ -6,7 +6,7 @@ import { LoginForm, Loading } from '../components';
 
 /* Instruments */
 import * as gql from '../graphql';
-import { isLoggedInVar } from '../lib/typePolicies';
+import { isLoggedInVar } from '../lib/apollo';
 
 export const Login = () => {
     const navigate = useNavigate();

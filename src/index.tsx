@@ -7,7 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Pages } from './pages';
 
 /* Instruments */
-import { client } from './lib/client';
+import { client } from './lib/apollo';
 import { GlobalStyle } from './styles';
 
 render(

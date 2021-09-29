@@ -12,7 +12,7 @@ import galaxy from '../assets/images/galaxy.jpg';
 import iss from '../assets/images/iss.jpg';
 import moon from '../assets/images/moon.jpg';
 import { SPACING } from '../styles';
-import { cartItemsVar } from '../lib/typePolicies';
+import { cartItemsVar } from '../lib/apollo';
 
 export const LaunchTile: React.FC<LaunchTileProps> = props => {
     const {

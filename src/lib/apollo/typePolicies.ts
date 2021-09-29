@@ -7,7 +7,7 @@ import {
 } from '@apollo/client';
 
 /* Instruments */
-import * as gql from '../graphql';
+import * as gql from '../../graphql';
 
 export const typePolicies: TTypePolicies = {
     Query: {

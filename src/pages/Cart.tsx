@@ -5,7 +5,7 @@ import {
 
 /* Instruments */
 import * as gql from '../graphql';
-import { cartItemsVar } from '../lib/typePolicies';
+import { cartItemsVar } from '../lib/apollo';
 
 export const Cart: React.FC = () => {
     const cartItemsQuery = gql.useGetCartItemsQuery();

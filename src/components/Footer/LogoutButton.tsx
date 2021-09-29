@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 /* Instruments */
-import { isLoggedInVar } from '../../lib/typePolicies';
+import { isLoggedInVar } from '../../lib/apollo';
 import { menuItemClassName } from '../MenuItem';
 import { ReactComponent as ExitIcon } from '../../assets/icons/exit.svg';
 

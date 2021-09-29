@@ -10,10 +10,10 @@ export const CartItem: React.FC<CartItemProps> = props => {
     });
     const { data, loading } = launchQuery;
 
-    if (loading) return <p>Loading...</p>;
-    if (!data) return <p>Not found</p>;
+    if (loading) return <h4>Loading...</h4>;
+    if (!data) return null;
 
-    return <LaunchTile launch = { data.launch } />;
+    return <LaunchTile launch = { data?.launch } />;
 };
 
 /* Types */
