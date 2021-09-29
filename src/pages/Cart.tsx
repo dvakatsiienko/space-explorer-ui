@@ -1,31 +1,53 @@
 /* Components */
 import {
-    Header, Loading, CartItem, BookTripsButton
+    Header, Loading, CartItem, Button
 } from '../components';
 
 /* Instruments */
 import * as gql from '../graphql';
+import { cartItemsVar } from '../lib/typePolicies';
 
 export const Cart: React.FC = () => {
-    const { data, loading, error } = gql.useGetCartItemsQuery();
+    const cartItemsQuery = gql.useGetCartItemsQuery();
 
-    if (loading) return <Loading />;
-    if (error) return <p>ERROR: {error.message}</p>;
+    const [ bookTripsMutation, bookTripsMeta ] = gql.useBookTripsMutation({
+        variables:   { launchIds: cartItemsQuery.data?.cartItems ?? [] },
+        onCompleted: () => cartItemsVar([]),
+    });
+
+    if (cartItemsQuery.loading || !cartItemsQuery.data) {
+        return <Loading />;
+    }
+    if (cartItemsQuery.error) {
+        return <p>Error: {cartItemsQuery.error.message}</p>;
+    }
+
+    const { cartItems } = cartItemsQuery.data;
+
+    const listJSX = cartItems.map(launchId => (
+        <CartItem key = { launchId } launchId = { launchId } />
+    ));
+
+    let message = null;
+
+    if (bookTripsMeta.called && bookTripsMeta.data?.bookTrips.length) {
+        message = 'Trips booked.';
+    }
+
+    if (!bookTripsMeta.called && !cartItems.length) {
+        message = 'Cart empty.';
+    }
 
     return (
         <>
             <Header title = 'My Cart' />
 
-            {data?.cartItems?.length === 0 ? (
-                <p>No items in your cart</p>
-            ) : (
-                <>
-                    {data?.cartItems.map(launchId => (
-                        <CartItem key = { launchId } launchId = { launchId } />
-                    ))}
+            <h4>{message}</h4>
 
-                    <BookTripsButton cartItems = { data?.cartItems ?? [] } />
-                </>
+            {listJSX}
+
+            {!!cartItems.length && (
+                <Button onClick = { () => bookTripsMutation() }>Book All</Button>
             )}
         </>
     );

@@ -5,15 +5,11 @@ import { Loading, Header, LaunchTile } from '../components';
 import * as gql from '../graphql';
 
 export const Profile: React.FC = () => {
-    const { data, loading, error } = gql.useUserProfileQuery({
-        fetchPolicy: 'network-only',
+    const { data, loading } = gql.useUserProfileQuery({
+        fetchPolicy: 'cache-and-network',
     });
 
-    if (loading) return <Loading />;
-    if (error) return <p>ERROR: {error.message}</p>;
-    if (!data) return <p>No data</p>;
-
-    const tripsListJSX = data.userProfile?.trips.map(trip => {
+    const tripsListJSX = data?.userProfile?.trips.map(trip => {
         return (
             <LaunchTile key = { trip.id } launch = { trip.launch } trip = { trip } />
         );
@@ -23,8 +19,11 @@ export const Profile: React.FC = () => {
         <>
             <Header title = 'My Trips' />
 
+            {loading && !data && <Loading />}
             {tripsListJSX}
-            {!tripsListJSX.length && <p>You haven't booked any trips</p>}
+            {!loading && !data?.userProfile?.trips.length && (
+                <p>You haven't booked any trips</p>
+            )}
         </>
     );
 };

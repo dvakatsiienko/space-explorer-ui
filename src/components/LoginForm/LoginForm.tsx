@@ -4,7 +4,7 @@ import { size } from 'polished';
 import { useForm } from 'react-hook-form';
 
 /* Components */
-import { Button } from '../TripButton';
+import { Button } from '../Button';
 
 /* Instruments */
 import * as gql from '../../graphql';

@@ -1,6 +1,10 @@
 /* Core */
+import { useReactiveVar, Reference } from '@apollo/client';
 import { Link } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+
+/* Components */
+import { Button } from './Button';
 
 /* Instruments */
 import * as gql from '../graphql';
@@ -8,56 +12,116 @@ import galaxy from '../assets/images/galaxy.jpg';
 import iss from '../assets/images/iss.jpg';
 import moon from '../assets/images/moon.jpg';
 import { SPACING } from '../styles';
+import { cartItemsVar } from '../lib/typePolicies';
 
 export const LaunchTile: React.FC<LaunchTileProps> = props => {
+    const {
+        id, site, rocket, mission, isBooked, flightNumber,
+    } = props.launch;
+
+    const cartItems = useReactiveVar(cartItemsVar);
+    const isInCart = id ? cartItems.includes(id) : false;
+
+    const [ cancelTripMutation, cancelTripMeta ] = gql.useCancelTripMutation({
+        variables: { tripId: props.trip?.id ?? '' },
+        update(cache) {
+            cache.modify({
+                id: cache.identify({
+                    __typename: 'UserProfile',
+                    id:         localStorage.getItem('userId'),
+                }),
+                fields: {
+                    trips(existingTrips: Reference[], { readField }) {
+                        return existingTrips.filter(
+                            tripRef => readField('id', tripRef) !== props.trip?.id,
+                        );
+                    },
+                },
+            });
+        },
+    });
+
+    const submit = (event: React.SyntheticEvent) => {
+        event.preventDefault();
+
+        if (props.trip) {
+            cancelTripMutation();
+        } else {
+            cartItemsVar(
+                isInCart
+                    ? cartItems.filter(itemId => itemId !== id)
+                    : [ ...cartItems, id ],
+            );
+        }
+    };
+
+    const isDisabled = cancelTripMeta.loading || (!props.trip && isBooked);
+
     return (
         <StyledLink
-            style = {{
-                backgroundImage: getBackgroundImage(props.launch.flightNumber),
-            }}
-            to = { `/launches/${props.launch.id}` }
+            $bgImage = { getBgImage(flightNumber) }
+            $isDetailed = { props.isDetailed }
+            to = { `/launches/${id}` }
         >
-            <h3>Mission: {props.launch.mission.name}</h3>
-            <h5>Rocket: {props.launch.rocket.name}</h5>
-            {props.trip && (
+            <div>
+                <h3>Mission: {mission.name}</h3>
                 <h5>
-                    Booked at:{' '}
-                    {new Date(props.trip.createdAt).toLocaleDateString()}
-                    &nbsp;
-                    {new Date(props.trip.createdAt).toLocaleTimeString()}
+                    Rocket: {rocket.name}{' '}
+                    {props.isDetailed && `(${rocket.type})`}
                 </h5>
-            )}
+
+                {props.isDetailed && <h5>Launch site: {site}</h5>}
+
+                {props.trip && (
+                    <h5>
+                        Booked at:{' '}
+                        {new Date(props.trip.createdAt).toLocaleDateString()}
+                        &nbsp;
+                        {new Date(props.trip.createdAt).toLocaleTimeString()}
+                    </h5>
+                )}
+            </div>
+
+            <Button $mini disabled = { isDisabled } onClick = { submit }>
+                {!props.trip && isBooked && '✓ Trip Booked'}
+                {props.trip && isBooked && 'Cancel trip'}
+                {!isBooked && isInCart && 'Remove from Cart'}
+                {!isBooked && !isInCart && 'Add to Cart'}
+            </Button>
         </StyledLink>
     );
 };
 
 /* Styles */
-export const cardClassName = css({
-    padding:            `${SPACING * 4}px ${SPACING * 5}px`,
-    borderRadius:       7,
-    color:              'white',
-    backgroundSize:     'cover',
-    backgroundPosition: 'center',
-});
-
 const padding = SPACING * 2;
-const StyledLink = styled(Link)(
-    {
-        display:             'block',
-        height:              193,
-        marginTop:           padding,
-        textDecoration:      'none',
-        ':not(:last-child)': {
-            marginBottom: padding * 2,
-        },
-    },
-    cardClassName,
-);
+
+interface StyledLinkProps {
+    $isDetailed?: boolean;
+    $bgImage: string;
+}
+const StyledLink = styled(Link)<StyledLinkProps>`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: ${props => (props.$isDetailed ? 365 : 193)}px;
+    margin-top: ${padding}px;
+    padding: ${SPACING * 4}px ${SPACING * 5}px ${SPACING * 2}px;
+    text-decoration: none;
+    border-radius: 7px;
+    color: white;
+    background-image: ${props => props.$bgImage};
+    background-size: cover;
+    background-position: center;
+
+    &:not(:last-child) {
+        margin-bottom: ${padding * 2}px;
+    }
+`;
 
 /* Helpers */
 const backgrounds = [ galaxy, iss, moon ];
 
-export function getBackgroundImage(flightNumber: number) {
+export function getBgImage(flightNumber: number) {
     const bg = flightNumber % backgrounds.length;
 
     return `url(${backgrounds[ bg ]})`;
@@ -66,5 +130,6 @@ export function getBackgroundImage(flightNumber: number) {
 /* Types */
 interface LaunchTileProps {
     launch: gql.LaunchFragment;
+    isDetailed?: boolean;
     trip?: gql.Trip;
 }
