@@ -4,7 +4,6 @@ schema:
 documents: 'src/graphql/**/*.graphql'
 
 config:
-    avoidOptionals: true
     dedupeOperationSuffix: true
 
 generates:
