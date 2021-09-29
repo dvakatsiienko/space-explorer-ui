@@ -22,7 +22,7 @@ export const Profile: React.FC = () => {
             {loading && !data && <Loading />}
             {tripsListJSX}
             {!loading && !data?.userProfile?.trips.length && (
-                <p>You haven't booked any trips</p>
+                <h4>You haven't booked any trips.</h4>
             )}
         </>
     );
