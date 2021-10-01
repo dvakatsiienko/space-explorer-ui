@@ -2,10 +2,6 @@
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-interface FormShape {
-    email: string;
-}
-
 const schema: yup.SchemaOf<FormShape> = yup
     .object()
     .shape({
@@ -17,3 +13,8 @@ const schema: yup.SchemaOf<FormShape> = yup
     .required();
 
 export const resolver = yupResolver(schema);
+
+/* Types */
+interface FormShape {
+    email: string;
+}
