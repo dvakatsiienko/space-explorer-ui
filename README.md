@@ -12,4 +12,4 @@ Built with the following technology stack:
 -   Vercel cloud deployment for UI
 -   Railway cloud deployment for API
 
-The _backend_ (_API_) for this project is [located here](https://github.com/dvakatsiienko/space-explorer-api).
+The **backend** (**API**) for this project is [located here](https://github.com/dvakatsiienko/space-explorer-api).
