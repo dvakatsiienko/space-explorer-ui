@@ -10,7 +10,7 @@ import * as gql from '../graphql';
 export const Launch: React.FC = () => {
     const params = useParams();
     const { data, loading, error } = gql.useLaunchQuery({
-        variables: { id: params.launchId },
+        variables: { id: params.launchId ?? '' },
     });
 
     if (loading) return <Loading />;
