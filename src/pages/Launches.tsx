@@ -2,19 +2,17 @@
 import { useState } from 'react';
 
 /* Components */
-import {
-    Header, LaunchTile, Loading, Button
-} from '../components';
+import { Header, LaunchTile, Loading, Button } from '../components';
 
 /* Instruments */
 import * as gql from '../graphql';
 
 export const Launches: React.FC = () => {
     const { data, loading, fetchMore } = gql.useLaunchesQuery();
-    const [ isLoadingMore, setIsLoadingMore ] = useState(false);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-    const launchesListJSX = data?.launches.list.map(launch => {
-        return <LaunchTile key = { launch.id } launch = { launch } />;
+    const launchesListJSX = data?.launches.list.map((launch) => {
+        return <LaunchTile key={launch.id} launch={launch} />;
     });
 
     const fetchMoreLaunches = async () => {
@@ -27,17 +25,17 @@ export const Launches: React.FC = () => {
 
     return (
         <>
-            <Header title = 'Space Explorer' />
+            <Header title='Space Explorer' />
 
             {loading && !data && <Loading />}
 
             {launchesListJSX}
 
-            {data?.launches.hasMore
-                && (isLoadingMore ? (
+            {data?.launches.hasMore &&
+                (isLoadingMore ? (
                     <Loading />
                 ) : (
-                    <Button onClick = { fetchMoreLaunches }>Load More</Button>
+                    <Button onClick={fetchMoreLaunches}>Load More</Button>
                 ))}
         </>
     );
