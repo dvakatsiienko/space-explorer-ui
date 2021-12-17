@@ -1,6 +1,6 @@
 {
     "name": "space-explorer-ui",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "private": true,
     "scripts": {
         "start": "react-scripts start",
