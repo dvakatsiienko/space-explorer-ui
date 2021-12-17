@@ -1,6 +1,3 @@
-# - name: compressed-size-action
-#   uses: preactjs/compressed-size-action@v2
-
 name: GitHub Actions Demo
 on: [push]
 jobs:
